@@ -1,4 +1,8 @@
 ﻿@model Gandiva.Models.TasksModel
+
+<input id="page" value="0" hidden />
+<input id="pageMax" value="@ViewBag.Pages" hidden />
+
 <div>
     <table class="tasks-table">
         <thead>
@@ -21,4 +25,16 @@
             </tr>
         }
     </table>
+</div>
+
+
+<div>
+    <ul class="pagination page-control">
+        <li><a href="javascript:window.app.prevPage()"><span class="glyphicon glyphicon-arrow-left"></span></a></li>
+        @for (int i = 0; i < ViewBag.Pages; i++)
+        {
+            <li><a href="javascript:window.app.changePage(@i)"><span class="glyphicon glyphicon-one-fine-full-dot"></span></a></li>
+        }
+        <li><a href="javascript:window.app.nextPage()"><span class="glyphicon glyphicon-arrow-right"></span></a></li>
+    </ul>
 </div>

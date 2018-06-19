@@ -15,16 +15,36 @@
 </div>
 <div>
     <input id="page" value="0" hidden />
-    <div id="tasksList">
-        @Html.Partial("TasksList", (Gandiva.Models.TasksModel)ViewBag.taskModel)
-    </div>
-</div>
+    <div id="tasksList" />
+</div> 
+
 <script type="text/javascript">
 
     $(document).ready(function () {
-        window.changePage = function (page) {
-            //var page =  $("#page").val();
+        window.app.changePage = function (page) {
+            $("#page").val(page);
+
             $("#tasksList").load('@(Url.Action("TasksList", "Home",null, Request.Url.Scheme))?startPage=' + page);
         };
+
+        window.app.nextPage = function () {
+            var page = $("#page").val();
+            var pageMax = $("#pageMax").val();
+            if (page + 1 <= pageMax) {
+                page++;
+            }
+            window.app.changePage(page);
+        };
+
+        window.app.prevPage = function () {
+            var page = $("#page").val();
+            var pageMax = $("#pageMax").val();
+            if (page - 1 >= 0) {
+                page--;
+            }
+            window.app.changePage(page);
+        };
+
+        $("#tasksList").load('@(Url.Action("TasksList", "Home",null, Request.Url.Scheme))?startPage=0');
     });
-</script> 
+</script>

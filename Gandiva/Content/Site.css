@@ -60,3 +60,10 @@ select {
 .tasks-table {
     width: 100%;
 }
+
+.glyphicon.glyphicon-one-fine-full-dot:before {
+    content: "\25cf";
+}
+ul.page-control > li > a {
+    height: 40px;
+}
