@@ -48,3 +48,11 @@ textarea {
 .top-bar-element-right {
     right: 0;
 }
+
+select {
+    width: 200px;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    height: 30px;
+}

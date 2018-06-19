@@ -2,11 +2,6 @@
 @{
     ViewBag.Title = "Home";
 }
-<script>
-    window.test = function (id) {
-        console.log(id);
-    }
-</script>
 <div class="row">
     <div class="top-bar">
         <div class="top-bar-element top-bar-element-left">
@@ -15,12 +10,11 @@
             @Html.ActionLink("Пользователи", "About", "Home")
         </div>
         <div class="top-bar-element top-bar-element-right">
-            @Html.DropDownListFor(
-             m => m.ActiveUser,
-             new SelectList(Model.Users, "Id", "VisibleName"),
-             new { onchange="window.test(this.value)" }
-          )
+            @Html.DropDownListFor(m => m.ActiveUser, new SelectList(Model.Users, "Id", "FullName"))
 
         </div>
+    </div>
+    <div id="tasksModels">
+        @Html.RenderPartial("TasksList", Model.TasksModel)
     </div>
 </div>

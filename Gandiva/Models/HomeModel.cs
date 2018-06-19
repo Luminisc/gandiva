@@ -7,16 +7,13 @@ namespace Gandiva.Models
 {
     public class User
     {
-        public User(int id, string firstName, string lastName)
+        public User(int id, string fullName)
         {
             Id = id;
-            FirstName = firstName;
-            LastName = lastName;
+            FullName = fullName;
         }
-        public string VisibleName { get { return FirstName + " " + LastName; } }
         public int Id { get; protected set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string FullName { get; protected set; }
     }
     public class HomeModel
     {
@@ -26,5 +23,6 @@ namespace Gandiva.Models
         }
         public List<User> Users = new List<User>();
         public User ActiveUser;
+        public TasksModel TasksModel = new TasksModel();
     }
 }
