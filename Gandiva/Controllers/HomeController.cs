@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Gandiva.Models;
 
 namespace Gandiva.Controllers
 {
@@ -10,21 +11,12 @@ namespace Gandiva.Controllers
     {
         public ActionResult Index()
         {
-            return View();
-        }
+            var homeModel = new HomeModel();
+            homeModel.Users.Add(new User(0, "Alex", "Rmnko"));
+            homeModel.Users.Add(new User(1, "Kirill", "Churin"));
+            homeModel.Users.Add(new User(2, "Ivan", "Ivanov"));
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return View(homeModel);
         }
     }
 }
