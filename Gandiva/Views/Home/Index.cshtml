@@ -2,19 +2,29 @@
 @{
     ViewBag.Title = "Home";
 }
-<div class="row">
-    <div class="top-bar">
-        <div class="top-bar-element top-bar-element-left">
-            @Html.ActionLink("Создать новую задачу", "Index", "Home")
-            <span>|</span>
-            @Html.ActionLink("Пользователи", "About", "Home")
-        </div>
-        <div class="top-bar-element top-bar-element-right">
-            @Html.DropDownListFor(m => m.ActiveUser, new SelectList(Model.Users, "Id", "FullName"))
 
-        </div>
+<div class="navbar">
+    <div class="top-bar-element top-bar-element-left">
+        @Html.ActionLink("Создать новую задачу", "Index", "Home")
+        <span>|</span>
+        @Html.ActionLink("Пользователи", "About", "Home")
     </div>
-    <div id="tasksModels">
-        @Html.RenderPartial("TasksList", Model.TasksModel)
+    <div class="top-bar-element top-bar-element-right">
+        @Html.DropDownListFor(m => m.ActiveUser, new SelectList(Model.Users, "Id", "FullName"))
     </div>
 </div>
+<div>
+    <input id="page" value="0" hidden />
+    <div id="tasksList">
+        @Html.Partial("TasksList", (Gandiva.Models.TasksModel)ViewBag.taskModel)
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        window.changePage = function (page) {
+            //var page =  $("#page").val();
+            $("#tasksList").load('@(Url.Action("TasksList", "Home",null, Request.Url.Scheme))?startPage=' + page);
+        };
+    });
+</script> 

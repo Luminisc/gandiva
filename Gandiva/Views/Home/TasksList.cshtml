@@ -1,7 +1,24 @@
 ﻿@model Gandiva.Models.TasksModel
 <div>
-    <table>
-        <thead></thead>
-        <tr></tr>
+    <table class="tasks-table">
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Заголовок</th>
+                <th>Создатель</th>
+                <th>Исполнитель</th>
+                <th>Дата создания</th>
+            </tr>
+        </thead>
+        @foreach (var task in Model.Tasks)
+        {
+            <tr>
+                <th>@task.Id</th>
+                <th>@task.Title</th>
+                <th>@task.Creator</th>
+                <th>@task.Executor</th>
+                <th>@task.CreationTime.ToLocalTime()</th>
+            </tr>
+        }
     </table>
 </div>

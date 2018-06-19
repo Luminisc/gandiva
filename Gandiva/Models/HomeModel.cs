@@ -23,6 +23,5 @@ namespace Gandiva.Models
         }
         public List<User> Users = new List<User>();
         public User ActiveUser;
-        public TasksModel TasksModel = new TasksModel();
     }
 }

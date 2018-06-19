@@ -9,24 +9,40 @@ namespace Gandiva.Controllers
 {
     public class HomeController : Controller
     {
+        List<Task> tasks = new List<Task>();
+        List<User> users = new List<User>();
+        int itemsPerPage = 5;
+
+        public HomeController()
+        {
+            users.Add(new User(0, "Alex Rmnko"));
+            users.Add(new User(1, "Kirill Churin"));
+            users.Add(new User(2, "Ivan Ivanov"));
+
+            for (int i = 0; i < 10; i++)
+            {
+                tasks.Add(new Task("Task " + i, "Creater " + i, "Executer " + i, DateTime.Now));
+            }
+        }
+
         public ActionResult Index()
         {
             var homeModel = new HomeModel();
-            homeModel.Users.Add(new User(0, "Alex Rmnko"));
-            homeModel.Users.Add(new User(1, "Kirill Churin"));
-            homeModel.Users.Add(new User(2, "Ivan Ivanov"));
-
+            homeModel.Users = users;
+            ViewBag.taskModel = new TasksModel() { Tasks = GetTasks(0) };
             return View(homeModel);
         }
 
-        public ActionResult TasksList()
+        public ActionResult TasksList(int startPage = 0)
         {
-            var model = new TasksModel();
-            model.Tasks.Add(new Task("Task 1", "Creater 1", "Executer 1", DateTime.Now));
-            model.Tasks.Add(new Task("Task 2", "Creater 2", "Executer 2", DateTime.Now));
-            model.Tasks.Add(new Task("Task 3", "Creater 3", "Executer 3", DateTime.Now));
+            var taskModel = new TasksModel();
+            taskModel.Tasks = GetTasks(startPage);
+            return PartialView(taskModel);
+        }
 
-            return PartialView(model);
+        List<Task> GetTasks(int startPage)
+        {
+            return tasks.Skip(startPage * itemsPerPage).Take(itemsPerPage).ToList();
         }
     }
 }
