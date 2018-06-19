@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
+using Gandiva.Data.Entity;
+
 namespace Gandiva.Data
 {
     interface IRepository<TEntity> where TEntity : class

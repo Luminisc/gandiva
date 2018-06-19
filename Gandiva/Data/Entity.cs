@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Gandiva.Data
+namespace Gandiva.Data.Entity
 {
     public abstract class Entity
     {

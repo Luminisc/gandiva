@@ -1,0 +1,40 @@
+﻿@model Gandiva.Models.TasksModel
+
+
+<input id="pageMax" value="@ViewBag.Pages" hidden />
+
+<div>
+    <table class="tasks-table">
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Заголовок</th>
+                <th>Создатель</th>
+                <th>Исполнитель</th>
+                <th>Дата создания</th>
+            </tr>
+        </thead>
+        @foreach (var task in Model.Tasks)
+        {
+            <tr>
+                <th>@task.Id</th>
+                <th>@task.Title</th>
+                <th>@task.Creator</th>
+                <th>@task.Executor</th>
+                <th>@task.CreationTime.ToLocalTime()</th>
+            </tr>
+        }
+    </table>
+</div>
+
+
+<div>
+    <ul class="pagination page-control">
+        <li><a href="javascript:window.app.prevPage()"><span class="glyphicon glyphicon-arrow-left"></span></a></li>
+        @for (int i = 0; i < ViewBag.Pages; i++)
+        {
+            <li><a href="javascript:window.app.changePage(@i)"><span class="glyphicon glyphicon-one-fine-full-dot"></span></a></li>
+        }
+        <li><a href="javascript:window.app.nextPage()"><span class="glyphicon glyphicon-arrow-right"></span></a></li>
+    </ul>
+</div>

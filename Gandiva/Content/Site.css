@@ -22,3 +22,48 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+
+.top-bar {
+    position: relative;
+    width: 80%;
+    height: auto;
+    margin: 0 40px;
+}
+
+.top-bar-element {
+    position: absolute;
+    /*width: 30px;
+    height: 20px;*/
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.top-bar-element-left {
+    left: 0;
+}
+
+.top-bar-element-right {
+    right: 0;
+}
+
+select {
+    width: 200px;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    height: 30px;
+}
+
+.tasks-table {
+    width: 100%;
+}
+
+.glyphicon.glyphicon-one-fine-full-dot:before {
+    content: "\25cf";
+}
+ul.page-control > li > a {
+    height: 40px;
+}
