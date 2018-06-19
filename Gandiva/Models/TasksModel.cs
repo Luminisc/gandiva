@@ -5,30 +5,17 @@ using System.Web;
 
 namespace Gandiva.Models
 {
-    public class TasksModel
+    public class TasksListViewModel
     {
-        public TasksModel()
-        {
-
-        }
-        public List<Task> Tasks = new List<Task>();
+        public List<TaskListItemViewModel> Tasks = new List<TaskListItemViewModel>();
     }
 
-    public class Task
+    public class TaskListItemViewModel
     {
-        public Task(string title, string creator, string executer, DateTime creationTime)
-        {
-            Id = new Random().Next();
-            Title = title;
-            Creator = creator;
-            Executor = executer;
-            CreationTime = creationTime;
-        }
-
-        public int Id { get; protected set; }
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Creator { get; set; }
-        public string Executor { get; set; }
-        public DateTime CreationTime { get; set; }
+        public string Contractor { get; set; }
+        public string CreatedDate { get; set; }
     }
 }

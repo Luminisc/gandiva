@@ -1,4 +1,4 @@
-﻿@model Gandiva.Models.TasksModel
+﻿@model Gandiva.Models.TasksListViewModel
 
 
 <input id="pageMax" value="@ViewBag.Pages" hidden />
@@ -20,8 +20,8 @@
                 <th>@task.Id</th>
                 <th>@task.Title</th>
                 <th>@task.Creator</th>
-                <th>@task.Executor</th>
-                <th>@task.CreationTime.ToLocalTime()</th>
+                <th>@task.Contractor</th>
+                <th>@task.CreatedDate</th>
             </tr>
         }
     </table>

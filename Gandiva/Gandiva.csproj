@@ -122,6 +122,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Business\Entity.cs" />
+    <Compile Include="Business\TasksService.cs" />
     <Compile Include="Business\UserService.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Data\GandivaContext.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Convertions.cs" />
     <Compile Include="Models\UsersModel.cs" />
     <Compile Include="Models\TasksModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
