@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Gandiva.Data
 {
-    public abstract class RowItem
+    public abstract class Entity
     {
-        protected RowItem()
+        protected Entity()
         {
             CreatedDate = DateTime.Now;
             IsActual = true;
@@ -17,7 +17,7 @@ namespace Gandiva.Data
         public bool IsActual { get; set; }
     }
 
-    public class User : RowItem
+    public class User : Entity
     {
         [StringLength(50)]
         public string FirstName { get; set; }
@@ -27,7 +27,7 @@ namespace Gandiva.Data
         public string SurName { get; set; }
     }
 
-    public class Task : RowItem
+    public class Task : Entity
     {
         [Required]
         public string Title { get; set; }
@@ -37,7 +37,7 @@ namespace Gandiva.Data
         public int Contractor { get; set; }
     }
 
-    public class Comment : RowItem
+    public class Comment : Entity
     {
         public int Task { get; set; }
         public int Creator { get; set; }
