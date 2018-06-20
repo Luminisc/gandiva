@@ -7,7 +7,7 @@
     <div class="top-bar-element top-bar-element-left">
         @Html.ActionLink("Создать новую задачу", "Index", "Home")
         <span>|</span>
-        @Html.ActionLink("Пользователи", "About", "Home")
+        @Html.ActionLink("Пользователи", "Index", "Home")
     </div>
     <div class="top-bar-element top-bar-element-right">
         @Html.DropDownListFor(m => m.ActiveUser, new SelectList(Model.Users, "Id", "FullName"))
@@ -38,7 +38,6 @@
 
         window.app.prevPage = function () {
             var page = Number($("#page").val());
-            var pageMax = Number($("#pageMax").val());
             if (page - 1 >= 0) {
                 page--;
             }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-
 using Gandiva.Data.Entity;
 
 namespace Gandiva.Data
@@ -35,9 +34,14 @@ namespace Gandiva.Data
             context.SaveChanges();
         }
 
-        public IEnumerable<TEntity> Get() { return dbSet.AsNoTracking().ToList(); }
+        public IEnumerable<TEntity> Get() { return dbSet.AsNoTracking(); }
         public TEntity Get(int id) { return dbSet.Find(id); }
-        public IEnumerable<TEntity> Get(Func<TEntity, bool> predicate) { return Get().Where(predicate).ToList(); }
+
+        public IEnumerable<TEntity> Get(Func<TEntity, bool> predicate)
+        {
+            //return dbSet.AsNoTracking().Where(predicate).ToList();
+            return dbSet.AsNoTracking().Where(p => predicate(p));
+        }
 
         public void Update(TEntity item)
         {

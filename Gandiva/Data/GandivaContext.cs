@@ -5,23 +5,18 @@ namespace Gandiva.Data
 {
     public class GandivaContext : DbContext
     {
+		static GandivaContext context;
         public DbSet<User> Users { get; set; }
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Comment> Comments { get; set; }
         #region Consructors...
         static GandivaContext() { Database.SetInitializer(new GandivaContextInitializer()); }
-        protected GandivaContext() : base("DefaultConnection") { }
+        GandivaContext() : base("DefaultConnection") { }
 		#endregion
 
-		private static GandivaContext context = null;
 		public static GandivaContext Context
 		{
-			get
-			{
-				if (context == null)
-					context = new GandivaContext();
-				return context;
-			}
+			get { return context ?? (context = new GandivaContext()); }
 		}
     }
 

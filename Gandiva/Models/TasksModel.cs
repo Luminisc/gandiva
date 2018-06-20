@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace Gandiva.Models
 {
     public class TasksListViewModel
     {
-        public List<TaskListItemViewModel> Tasks = new List<TaskListItemViewModel>();
+        public IEnumerable<TaskListItemViewModel> Tasks = new List<TaskListItemViewModel>();
     }
 
     public class TaskListItemViewModel

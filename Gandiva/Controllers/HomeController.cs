@@ -2,36 +2,33 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-
-using Gandiva.Models;
 using Gandiva.Business;
+using Gandiva.Common;
+using Gandiva.Models;
 
 namespace Gandiva.Controllers
 {
-	public class HomeController : Controller
-	{
-		int itemsPerPage = 5;
+    public class HomeController : Controller
+    {
+        const int ITEMS_PER_PAGE = 5;
 
-		public ActionResult Index()
-		{
-			var users = UserService.GetUsers().Select(e => e.ConvertToViewModel()).ToList();
-			return View(new UsersModel() {
-				Users = users
-			});
-		}
+        public ActionResult Index()
+        {
+            var users = UserService.GetUsers().Select(e => e.ToViewModel()).ToList();
+            return View(new UsersModel { Users = users });
+        }
 
-		public ActionResult TasksList(int startPage = 0)
-		{
-			var taskModel = new TasksListViewModel();
-			taskModel.Tasks = GetTasks(0);
-			ViewBag.Pages = Math.Ceiling(taskModel.Tasks.Count / (float)itemsPerPage);
-			return PartialView(taskModel);
-		}
+        public ActionResult TasksList(int currentPage = 0)
+        {
+            var model = new TasksListViewModel { Tasks = GetTasks(currentPage) };
+            ViewBag.Pages = Math.Ceiling(model.Tasks.Count() / (float)ITEMS_PER_PAGE);
+            return PartialView(model);
+        }
 
-		List<TaskListItemViewModel> GetTasks(int startPage)
-		{
-			var tasks = TasksService.GetTasksList().Select(task => task.ConvertToViewModel()).ToList();
-			return tasks.Skip(startPage * itemsPerPage).Take(itemsPerPage).ToList();
-		}
-	}
+        static IEnumerable<TaskListItemViewModel> GetTasks(int currentPage)
+        {
+            var tasks = TasksService.GetTasksList().Select(task => task.ToViewModel());
+            return tasks.Skip(currentPage * ITEMS_PER_PAGE).Take(ITEMS_PER_PAGE);
+        }
+    }
 }
