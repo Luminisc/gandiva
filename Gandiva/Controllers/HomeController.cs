@@ -14,22 +14,18 @@ namespace Gandiva.Controllers
 
         public ActionResult Index()
         {
-			ViewBag.TablePartialViewLink = Url.Action("TasksList", "Home", null, Request.Url.Scheme) + "?startPage=";
+			ViewBag.TablePartialViewLink = Url.Action("TasksList", "Home", null, Request.Url.Scheme) + "?currentPage=";
             var users = UserService.GetUsers().Select(e => e.ToViewModel()).ToList();
 			return View(new UsersModel { Users = users });
         }
 
         public ActionResult TasksList(int currentPage = 0)
         {
-            var model = new TasksListViewModel { Tasks = GetTasks(currentPage) };
-            ViewBag.Pages = Math.Ceiling(model.Tasks.Count() / (float)ITEMS_PER_PAGE);
+			var tasks = TasksService.GetTasksList().Select(task => task.ToViewModel());
+			var displayedTasks = tasks.Skip(currentPage * ITEMS_PER_PAGE).Take(ITEMS_PER_PAGE);
+			var model = new HomeViewModel { Tasks = displayedTasks };
+            ViewBag.Pages = Math.Ceiling(tasks.Count() / (float)ITEMS_PER_PAGE);
             return PartialView(model);
-        }
-
-        static IEnumerable<TaskListItemViewModel> GetTasks(int currentPage)
-        {
-            var tasks = TasksService.GetTasksList().Select(task => task.ToViewModel());
-            return tasks.Skip(currentPage * ITEMS_PER_PAGE).Take(ITEMS_PER_PAGE);
         }
     }
 }
