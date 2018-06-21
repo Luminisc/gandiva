@@ -15,6 +15,6 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#tasksList").load('@(Url.Action("UsersList", "Users",null, Request.Url.Scheme))?startPage=0');
+        $("#usersList").load('@ViewBag.TablePartialViewLink');
     });
 </script>
