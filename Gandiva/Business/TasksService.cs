@@ -2,6 +2,7 @@
 using System.Linq;
 using Gandiva.Business.Entity;
 using Gandiva.Data;
+using Gandiva.Common;
 
 namespace Gandiva.Business
 {
@@ -20,13 +21,13 @@ namespace Gandiva.Business
                          where usersIdOfTasks.Contains(user.Id)
                          select new { user.Id, FullName = user.FirstName + " " + user.SurName }).ToList();
 
-            return tasks.Select(task => new TaskListItem
-            {
-                Id = task.Id,
-                Title = task.Title,
-                Creator = names.Where(usr => usr.Id == task.Creator).Select(usr => usr.FullName).Single(),// ожидаем только 1 элемент 
-                Contractor = names.Where(usr => usr.Id == task.Contractor).Select(usr => usr.FullName).Single(),
-                CreatedDate = task.CreatedDate
+			return tasks.Select(task => new TaskListItem
+			{
+				Id = task.Id,
+				Title = task.Title,
+				Creator = task.TaskCreator.FullName(),
+                Contractor = task.TaskContractor.FullName(),
+				CreatedDate = task.CreatedDate
             });
         }
     }
