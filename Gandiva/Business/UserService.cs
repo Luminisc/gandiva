@@ -7,11 +7,9 @@ namespace Gandiva.Business
 {
     public static class UserService
     {
-        public static IEnumerable<User> GetUsers()
+        public static IEnumerable<User> Get()
         {
-            var users = from user in GandivaContext.Context.Users
-                          where user.IsActual
-                          select user;
+            var users = new UserRepository().Get().Where(u => u.IsActual);
             return users.Select(e => new User { Id = e.Id, FirstName = e.FirstName, SecondaryName = e.SecondaryName, Surname = e.SurName });
         }
     }

@@ -10,9 +10,9 @@ namespace Gandiva.Data
     {
         /* CRUD operation */
         void Create(TEntity item);
-        IEnumerable<TEntity> Get();
+        IQueryable<TEntity> Get();
         TEntity Get(int id);
-        IEnumerable<TEntity> Get(Func<TEntity, bool> predicate);
+        IQueryable<TEntity> Get(Func<TEntity, bool> predicate);
         void Update(TEntity item);
         void Delete(TEntity item);
     }
@@ -34,14 +34,10 @@ namespace Gandiva.Data
             context.SaveChanges();
         }
 
-        public IEnumerable<TEntity> Get() { return dbSet.AsNoTracking(); }
+        public IQueryable<TEntity> Get() { return dbSet.AsNoTracking(); }
         public TEntity Get(int id) { return dbSet.Find(id); }
 
-        public IEnumerable<TEntity> Get(Func<TEntity, bool> predicate)
-        {
-            //return dbSet.AsNoTracking().Where(predicate).ToList();
-            return dbSet.AsNoTracking().Where(p => predicate(p));
-        }
+        public IQueryable<TEntity> Get(Func<TEntity, bool> predicate) { return dbSet.AsNoTracking().Where(p => predicate(p)); }
 
         public void Update(TEntity item)
         {
@@ -58,16 +54,16 @@ namespace Gandiva.Data
 
     class UserRepository : Repository<User>
     {
-        public UserRepository(DbContext context) : base(context) { }
+        public UserRepository() : base(GandivaContext.Instance) { }
     }
 
     class TaskRepository : Repository<Task>
     {
-        public TaskRepository(DbContext context) : base(context) { }
+        public TaskRepository() : base(GandivaContext.Instance) { }
     }
 
     class CommentRepository : Repository<Comment>
     {
-        public CommentRepository(DbContext context) : base(context) { }
+        public CommentRepository() : base(GandivaContext.Instance) { }
     }
 }

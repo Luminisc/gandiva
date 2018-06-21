@@ -14,7 +14,7 @@ namespace Gandiva.Controllers
 
         public ActionResult Index()
         {
-            var users = UserService.GetUsers().Select(e => e.ToViewModel()).ToList();
+            var users = UserService.Get().Select(e => e.ToViewModel()).ToList();
             return View(new UsersModel { Users = users });
         }
 
