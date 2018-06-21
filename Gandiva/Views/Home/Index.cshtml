@@ -7,7 +7,7 @@
     <div class="top-bar-element top-bar-element-left">
         @Html.ActionLink("Создать новую задачу", "Index", "Home")
         <span>|</span>
-        @Html.ActionLink("Пользователи", "Index", "Home")
+        @Html.ActionLink("Пользователи", "Index", "Users")
     </div>
     <div class="top-bar-element top-bar-element-right">
         @Html.DropDownListFor(m => m.ActiveUser, new SelectList(Model.Users, "Id", "FullName"))
@@ -20,6 +20,6 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#tasksList").load('@(Url.Action("TasksList", "Home",null, Request.Url.Scheme))?startPage=0');
+        $("#tasksList").load('@ViewBag.TablePartialViewLink');
     });
 </script>

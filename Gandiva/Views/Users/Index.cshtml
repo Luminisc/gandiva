@@ -2,4 +2,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
+<div class="navbar">
+    <div class="top-bar-element top-bar-element-left">
+        @Html.ActionLink("Home", "Index", "Home")
+        <span>|</span>
+        @Html.ActionLink("Создать новую задачу", "Index", "Tasks")
+    </div>
+</div>
+<div>
+    <input id="page" value="0" hidden />
+    <div id="usersList" />
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#tasksList").load('@(Url.Action("UsersList", "Users",null, Request.Url.Scheme))?startPage=0');
+    });
+</script>
