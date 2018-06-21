@@ -59,6 +59,13 @@ select {
 
 .tasks-table {
     width: 100%;
+    border-width: 2px;
+}
+.tasks-table > tbody > tr > td {
+    padding: 0.25em;
+}
+.tasks-table > thead > tr > th {
+    text-align: center;
 }
 
 .glyphicon.glyphicon-one-fine-full-dot:before {

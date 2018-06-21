@@ -126,6 +126,7 @@
     <Compile Include="Business\TasksService.cs" />
     <Compile Include="Business\UserService.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Data\Entity\Comment.cs" />
     <Compile Include="Data\Entity\Task.cs" />
@@ -178,6 +179,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\TasksList.cshtml" />
+    <Content Include="Views\Tasks\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

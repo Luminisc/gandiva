@@ -4,7 +4,7 @@
 <input id="pageMax" value="@ViewBag.Pages" hidden />
 
 <div>
-    <table class="tasks-table">
+    <table class="tasks-table table-bordered">
         <thead>
             <tr>
                 <th>№</th>
@@ -17,11 +17,11 @@
         @foreach (var task in Model.Tasks)
         {
             <tr>
-                <th>@task.Id</th>
-                <th>@task.Title</th>
-                <th>@task.Creator</th>
-                <th>@task.Contractor</th>
-                <th>@task.CreatedDate</th>
+                <td>@task.Id</td>
+                <td>@task.Title</td>
+                <td>@task.Creator</td>
+                <td>@task.Contractor</td>
+                <td>@task.CreatedDate</td>
             </tr>
         }
     </table>
