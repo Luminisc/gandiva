@@ -10,6 +10,34 @@
     <script type="text/javascript">
         $(document).ready(function () {
             window.app = {};
+
+            window.app.changePage = function (page) {
+                $("#page").val(page);
+                $("#tasksList").load('@ViewBag.TablePartialViewLink' + page);
+            };
+
+            window.app.nextPage = function () {
+                var page = Number($("#page").val());
+                var pageMax = Number($("#pageMax").val());
+                page++;
+
+                if (page + 1 >= pageMax) {
+                    page = pageMax - 1;
+                }
+
+                window.app.changePage(page);
+            };
+
+            window.app.prevPage = function () {
+                var page = Number($("#page").val());
+                page--;
+
+                if (page - 1 < 0) {
+                    page = 0;
+                }
+
+                window.app.changePage(page);
+            };
         });
     </script>
 </head>
