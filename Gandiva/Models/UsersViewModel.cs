@@ -11,7 +11,7 @@ namespace Gandiva.Models
         public string FullName { get { return string.Format("{0} {1}", FirstName, Surname); } }
     }
 
-    public class UsersModel
+    public class UsersViewModel
     {
         public UserViewModel ActiveUser;
         public IEnumerable<UserViewModel> Users = new List<UserViewModel>();

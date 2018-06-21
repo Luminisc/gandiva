@@ -138,8 +138,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Common\Extentions.cs" />
-    <Compile Include="Models\UsersModel.cs" />
-    <Compile Include="Models\HomeModel.cs" />
+    <Compile Include="Models\TasksViewModel.cs" />
+    <Compile Include="Models\UsersViewModel.cs" />
+    <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
