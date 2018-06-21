@@ -14,6 +14,7 @@ namespace Gandiva.Controllers
 
         public ActionResult Index()
         {
+			ViewBag.TablePartialViewLink = Url.Action("TasksList", "Home", null, Request.Url.Scheme) + "?startPage=";
             var users = UserService.GetUsers().Select(e => e.ToViewModel()).ToList();
             return View(new UsersModel { Users = users });
         }

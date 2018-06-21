@@ -19,31 +19,7 @@
 </div> 
 
 <script type="text/javascript">
-
     $(document).ready(function () {
-        window.app.changePage = function (page) {
-            $("#page").val(page);
-
-            $("#tasksList").load('@(Url.Action("TasksList", "Home",null, Request.Url.Scheme))?startPage=' + page);
-        };
-
-        window.app.nextPage = function () {
-            var page = Number($("#page").val());
-            var pageMax = Number($("#pageMax").val());
-            if (page + 1 < pageMax) {
-                page++;
-            }
-            window.app.changePage(page);
-        };
-
-        window.app.prevPage = function () {
-            var page = Number($("#page").val());
-            if (page - 1 >= 0) {
-                page--;
-            }
-            window.app.changePage(page);
-        };
-
         $("#tasksList").load('@(Url.Action("TasksList", "Home",null, Request.Url.Scheme))?startPage=0');
     });
 </script>
