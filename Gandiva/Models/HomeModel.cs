@@ -2,7 +2,7 @@
 
 namespace Gandiva.Models
 {
-    public class TasksListViewModel
+    public class HomeViewModel
     {
         public IEnumerable<TaskListItemViewModel> Tasks = new List<TaskListItemViewModel>();
     }
