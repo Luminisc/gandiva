@@ -9,9 +9,7 @@ namespace Gandiva.Business
     {
         public static IEnumerable<User> GetUsers()
         {
-            var users = from user in GandivaContext.Context.Users
-                          where user.IsActual
-                          select user;
+            var users = new UserRepository().Get().Where(u => u.IsActual);
             return users.Select(e => new User { Id = e.Id, FirstName = e.FirstName, SecondaryName = e.SecondaryName, Surname = e.SurName });
         }
     }
