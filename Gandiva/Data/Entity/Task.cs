@@ -14,12 +14,12 @@ namespace Gandiva.Data.Entity
         /// 
         /// </summary>
         [ForeignKey("Creator")]
-        public User TaskCreator { get; set; }
+        public virtual User TaskCreator { get; set; }
         /// <summary>
         /// 
         /// </summary>
         [ForeignKey("Contractor")]
-        public User TaskContractor { get; set; }
+        public virtual User TaskContractor { get; set; }
     }
 
 

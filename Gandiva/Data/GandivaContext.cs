@@ -15,11 +15,13 @@ namespace Gandiva.Data
             modelBuilder.Entity<Task>()
                 .HasRequired(c => c.TaskCreator)
                 .WithMany()
+                .HasForeignKey(c=>c.Creator)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Task>()
                 .HasRequired(c => c.TaskContractor)
                 .WithMany()
+                .HasForeignKey(c => c.Contractor)
                 .WillCascadeOnDelete(false);
 
             base.OnModelCreating(modelBuilder);
