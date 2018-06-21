@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using Gandiva.Data.Entity;
@@ -36,7 +35,6 @@ namespace Gandiva.Data
 
         public IQueryable<TEntity> Get() { return dbSet.AsNoTracking(); }
         public TEntity Get(int id) { return dbSet.Find(id); }
-
         public IQueryable<TEntity> Get(Func<TEntity, bool> predicate) { return dbSet.AsNoTracking().Where(p => predicate(p)); }
 
         public void Update(TEntity item)

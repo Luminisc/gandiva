@@ -11,17 +11,9 @@ namespace Gandiva.Business
         public static IEnumerable<TaskListItem> GetTasksList()
         {
             /* Получаем текущие таски */
-            var tasks = (from task in new TaskRepository().Get()
-                         where task.IsActual
-                         select task).ToList();
-            /* Получаем Id всех создателей и исполнителей тасков */
-            var usersIdOfTasks = tasks.Select(task => task.Creator).Concat(tasks.Select(task => task.Contractor)).Distinct().ToList();
-            /* */
-            var names = (from user in new UserRepository().Get()
-                         where usersIdOfTasks.Contains(user.Id)
-                         select new { user.Id, FullName = user.FirstName + " " + user.SurName }).ToList();
 
-			return tasks.Select(task => new TaskListItem
+            var tasks = new TaskRepository().Get().Where(x => x.IsActual).ToList();
+            return tasks.Select(task => new TaskListItem
 			{
 				Id = task.Id,
 				Title = task.Title,

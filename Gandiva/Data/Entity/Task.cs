@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
 
 namespace Gandiva.Data.Entity
 {
@@ -11,16 +11,29 @@ namespace Gandiva.Data.Entity
         public int Creator { get; set; }
         public int Contractor { get; set; }
         /// <summary>
-        /// 
         /// </summary>
-        [ForeignKey("Creator")]
+        //[ForeignKey("Creator")]
         public virtual User TaskCreator { get; set; }
         /// <summary>
-        /// 
         /// </summary>
-        [ForeignKey("Contractor")]
+        // [ForeignKey("Contractor")]
         public virtual User TaskContractor { get; set; }
+        public override string ToString() { return string.Format("Task: {0}", Title); }
+
+        public sealed class Configuration : EntityTypeConfiguration<Task>
+        {
+            public Configuration()
+            {
+                HasRequired(c => c.TaskCreator)
+                    .WithMany()
+                    .HasForeignKey(c => c.Creator)
+                    .WillCascadeOnDelete(false);
+
+                HasRequired(c => c.TaskContractor)
+                    .WithMany()
+                    .HasForeignKey(c => c.Contractor)
+                    .WillCascadeOnDelete(false);
+            }
+        }
     }
-
-
 }

@@ -11,7 +11,7 @@ namespace Gandiva.Data.Entity
             IsActual = true;
         }
 
-        [Key]
+        [Key] //optional
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool IsActual { get; set; }
