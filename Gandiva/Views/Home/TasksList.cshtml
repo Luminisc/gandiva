@@ -5,6 +5,13 @@
 
 <div>
     <table class="tasks-table table-bordered">
+        <colgroup>
+            <col class="col-md-1">
+            <col class="col-md-3">
+            <col class="col-md-3">
+            <col class="col-md-3">
+            <col class="col-md-2">
+        </colgroup>
         <thead>
             <tr>
                 <th>№</th>
@@ -15,20 +22,20 @@
             </tr>
         </thead>
         @foreach (var task in Model.Tasks)
-        {
-            <tr>
-                <td>@task.Id</td>
-                <td>@task.Title</td>
-                <td>@task.Creator</td>
-                <td>@task.Contractor</td>
-                <td>@task.CreatedDate</td>
-            </tr>
-        }
+    {
+        <tr>
+            <td>@task.Id</td>
+            <td>@task.Title</td>
+            <td>@task.Creator</td>
+            <td>@task.Contractor</td>
+            <td>@task.CreatedDate</td>
+        </tr>
+}
     </table>
 </div>
 
 
-<div>
+<div  class="text-center">
     <ul class="pagination page-control">
         <li><a href="javascript:window.app.prevPage()"><span class="glyphicon glyphicon-arrow-left"></span></a></li>
         @for (int i = 0; i < ViewBag.Pages; i++)

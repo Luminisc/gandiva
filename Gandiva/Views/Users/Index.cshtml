@@ -11,10 +11,5 @@
 </div>
 <div>
     <input id="page" value="0" hidden />
-    <div id="usersList" />
+    <div id="list" />
 </div>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#tasksList").load('@(Url.Action("UsersList", "Users",null, Request.Url.Scheme))?startPage=0');
-    });
-</script>

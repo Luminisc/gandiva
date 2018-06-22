@@ -11,9 +11,9 @@
         $(document).ready(function () {
             window.app = {};
 
-            window.app.changePage = function (page) {
-                $("#page").val(page);
-                $("#tasksList").load('@ViewBag.TablePartialViewLink' + page);
+            window.app.changePage = function (params) {
+                $("#page").val(params.page);
+                $("#list").load('@ViewBag.TablePartialViewLink', params);
             };
 
             window.app.nextPage = function () {
@@ -25,7 +25,7 @@
                     page = pageMax - 1;
                 }
 
-                window.app.changePage(page);
+                window.app.changePage({page});
             };
 
             window.app.prevPage = function () {
@@ -36,17 +36,28 @@
                     page = 0;
                 }
 
-                window.app.changePage(page);
+                window.app.changePage({ page });
             };
+
+            window.app.newUser = function () {
+                var page = $("#page").val();
+                window.app.changePage({ page, withNew: true});
+            }
+            window.app.refreshView = function () {
+                var page = $("#page").val();
+                window.app.changePage({page});
+            }
+
+            window.app.refreshView();
         });
     </script>
 </head>
-<body>    
+<body>
     <div class="container body-content">
         @RenderBody()
     </div>
 
-    
+
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
