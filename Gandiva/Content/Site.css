@@ -17,7 +17,7 @@
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
+/*input,*/
 select,
 textarea {
     max-width: 280px;
@@ -74,3 +74,33 @@ select {
 ul.page-control > li > a {
     height: 40px;
 }
+
+/*Users screen*/
+.users-table {
+    width: 100%;
+    border-width: 1px;
+    border-color: #000;
+}
+.users-table > thead > tr > th {
+    text-align: center;
+}
+.users-table > tbody > tr > td {
+    padding: 0;
+}
+.users-table > tbody > tr > td * {
+    width: 100%;
+}
+.users-table > tbody > tr > td input[type=text] {
+    border-width: 0;
+    padding: 6px;
+}
+
+
+/*.users-table > * > * > * > input[type="text"] {
+    width: 100%;
+    height: 100%;
+}
+
+
+
+*/

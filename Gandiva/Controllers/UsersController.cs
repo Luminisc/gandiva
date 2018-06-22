@@ -9,16 +9,16 @@ using System.Web.Mvc;
 
 namespace Gandiva.Controllers
 {
-    public class UsersController : Controller
-    {
+	public class UsersController : Controller
+	{
 		const int ITEMS_PER_PAGE = 5;
 
 		[HttpGet]
 		public ActionResult Index()
-        {
-			ViewBag.TablePartialViewLink = Url.Action("UsersList", "Users", null, Request.Url.Scheme) + "?currentPage=";
+		{
+			ViewBag.TablePartialViewLink = Url.Action("UsersList", "Users", null, Request.Url.Scheme);
 			return View();
-        }
+		}
 
 		[HttpPost]
 		public ActionResult Index(UserViewModel _model, string action)
@@ -29,20 +29,20 @@ namespace Gandiva.Controllers
 					break;
 				case "delete":
 					break;
-				default:
+				case "create":
 					break;
 			}
-			ViewBag.TablePartialViewLink = Url.Action("UsersList", "Users", null, Request.Url.Scheme) + "?currentPage=";
-			return View();
+			return Index();
 		}
-
-		[HttpGet]
-		public ActionResult UsersList(int currentPage = 0)
+		
+		public ActionResult UsersList(int page = 0, bool withNew = false)
 		{
-			var users = UserService.GetUsers().Select(e => e.ToViewModel()).ToList();
-			var model = new UsersViewModel { Users = users };
-			var displayedUsers = users.Skip(currentPage * ITEMS_PER_PAGE).Take(ITEMS_PER_PAGE);
+			var users = UserService.GetUsers().Select(e => e.ToViewModel());
+			users = users.Take(3).Concat(users);
+			var displayedUsers = users.Skip(page * ITEMS_PER_PAGE).Take(ITEMS_PER_PAGE);
 			ViewBag.Pages = Math.Ceiling(users.Count() / (float)ITEMS_PER_PAGE);
+			ViewBag.ShowNewUserField = withNew;
+			var model = new UsersViewModel { Users = displayedUsers };
 			return PartialView(model);
 		}
 	}
