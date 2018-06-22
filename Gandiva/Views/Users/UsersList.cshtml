@@ -1,0 +1,69 @@
+﻿@model Gandiva.Models.UsersViewModel
+
+
+<input id="pageMax" value="@ViewBag.Pages" hidden />
+
+<div>
+    <table class="users-table table-bordered">
+        <colgroup>
+            <col class="col-md-1">
+            <col class="col-md-3">
+            <col class="col-md-3">
+            <col class="col-md-3">
+            <col class="col-md-1">
+            <col class="col-md-1">
+        </colgroup>
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Фамилия</th>
+                <th>Имя</th>
+                <th>Отчество</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td>
+                    <form action="@Url.Action("Index", "Users", null, Request.Url.Scheme)" method="post" id="Form @user.Id.ToString()">
+                        @Html.TextBox("Id", user.Id.ToString(), new { @readonly = "readonly", autocomplete = "off" })
+                    </form>
+                </td>
+                <td>@Html.TextBox("FirstName", user.FirstName, new { form = "Form " + @user.Id.ToString(), autocomplete = "off" })</td>
+                <td>@Html.TextBox("SecondaryName", user.SecondaryName, new { form = "Form " + @user.Id.ToString(), autocomplete = "off" })</td>
+                <td>@Html.TextBox("Surname", user.Surname, new { form = "Form " + @user.Id.ToString(), autocomplete = "off" })</td>
+                <td><button class="btn btn-default btn-xs" name="action" value="save" form="Form @user.Id.ToString()">Сохранить</button></td>
+                <td><button class="btn btn-default btn-xs" name="action" value="delete" form="Form @user.Id.ToString()">Удалить</button></td>
+            </tr>
+        }
+        @if (ViewBag.ShowNewUserField)
+        {
+            <tr>
+                <td>
+                    <form action="@Url.Action("Index", "Users", null, Request.Url.Scheme)" method="post" id="Form new"></form>
+                </td>
+                <td>@Html.TextBox("FirstName", "", new { form = "Form new", autocomplete = "off" })</td>
+                <td>@Html.TextBox("SecondaryName", "", new { form = "Form new", autocomplete = "off" })</td>
+                <td>@Html.TextBox("Surname", "", new { form = "Form new", autocomplete = "off" })</td>
+                <td><button class="btn btn-default btn-xs" name="action" value="create" form="Form new">Сохранить</button></td>
+                <td><button class="btn btn-default btn-xs" onclick="window.app.refreshView()">Удалить</button></td>
+            </tr>
+        }
+    </table>
+    @if (!ViewBag.ShowNewUserField)
+    {
+        <div class="text-right"><button class="btn btn-default btn-xs users-create-btn" onclick="window.app.newUser()">Создать пользователя</button></div>
+    }
+</div>
+<div class="text-center">
+    <ul class="pagination page-control">
+        <li><a href="javascript:window.app.prevPage()"><span class="glyphicon glyphicon-arrow-left"></span></a></li>
+        @for (int i = 0; i < ViewBag.Pages; i++)
+        {
+            <li><a href="javascript:window.app.changePage(@i)"><span class="glyphicon glyphicon-one-fine-full-dot"></span></a></li>
+        }
+        <li><a href="javascript:window.app.nextPage()"><span class="glyphicon glyphicon-arrow-right"></span></a></li>
+    </ul>
+</div>
