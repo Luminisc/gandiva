@@ -11,6 +11,7 @@ namespace Gandiva.Models
         {
             Task = new Task();
             Users = new UserRepository().Get().OrderBy(x => x.SurName).ToList();
+           
         }
 
         public TasksViewModel(Task task)
