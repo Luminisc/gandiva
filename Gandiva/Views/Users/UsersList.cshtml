@@ -28,13 +28,13 @@
             <tr>
                 <td>
                     <form action="@Url.Action("Index", "Users", null, Request.Url.Scheme)" method="post" id="Form @user.Id.ToString()">
-                        @Html.TextBox("Id", user.Id.ToString(), new { @readonly = "readonly", autocomplete = "off" })
+                        @Html.TextBox("Id", user.Id.ToString(), new { @readonly = "readonly", autocomplete = "off", required = "" })
                     </form>
                 </td>
-                <td>@Html.TextBox("Surname", user.Surname, new { form = "Form " + @user.Id.ToString(), autocomplete = "off" })</td>
-                <td>@Html.TextBox("FirstName", user.FirstName, new { form = "Form " + @user.Id.ToString(), autocomplete = "off" })</td>
-                <td>@Html.TextBox("SecondaryName", user.SecondaryName, new { form = "Form " + @user.Id.ToString(), autocomplete = "off" })</td>
-                <td><button class="btn btn-default btn-xs" name="action" value="save" form="Form @user.Id.ToString()">Сохранить</button></td>
+                <td>@Html.TextBox("Surname", user.Surname, new { form = "Form " + @user.Id.ToString(), autocomplete = "off", required = "" })</td>
+                <td>@Html.TextBox("FirstName", user.FirstName, new { form = "Form " + @user.Id.ToString(), autocomplete = "off", required = "" })</td>
+                <td>@Html.TextBox("SecondaryName", user.SecondaryName, new { form = "Form " + @user.Id.ToString(), autocomplete = "off", required = "" })</td>
+                <td><button class="btn btn-default btn-xs" name="action" value="save" form="Form @user.Id.ToString()" type="submit">Сохранить</button></td>
                 <td><button class="btn btn-default btn-xs" name="action" value="delete" form="Form @user.Id.ToString()">Удалить</button></td>
             </tr>
         }
@@ -44,10 +44,10 @@
                 <td>
                     <form action="@Url.Action("Index", "Users", null, Request.Url.Scheme)" method="post" id="Form new"></form>
                 </td>
-                <td>@Html.TextBox("Surname", "", new { form = "Form new", autocomplete = "off", placeholder="Фамилия" })</td>
-                <td>@Html.TextBox("FirstName", "", new { form = "Form new", autocomplete = "off", placeholder = "Имя" })</td>
-                <td>@Html.TextBox("SecondaryName", "", new { form = "Form new", autocomplete = "off", placeholder = "Отчество" })</td>
-                <td><button class="btn btn-default btn-xs" name="action" value="create" form="Form new">Сохранить</button></td>
+                <td>@Html.TextBox("Surname", "", new { form = "Form new", autocomplete = "off", placeholder="Фамилия", required = "" })</td>
+                <td>@Html.TextBox("FirstName", "", new { form = "Form new", autocomplete = "off", placeholder = "Имя", required = "" })</td>
+                <td>@Html.TextBox("SecondaryName", "", new { form = "Form new", autocomplete = "off", placeholder = "Отчество", required = "" })</td>
+                <td><button class="btn btn-default btn-xs" name="action" value="create" form="Form new" type="submit">Сохранить</button></td>
                 <td><button class="btn btn-default btn-xs" onclick="window.app.refreshView()">Удалить</button></td>
             </tr>
         }
