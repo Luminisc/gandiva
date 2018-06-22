@@ -34,5 +34,30 @@ namespace Gandiva.Common
 		{
 			return string.Format("{0} {1}", user.FirstName, user.SurName);
 		}
+
+		public static bool IsValid(this UserViewModel user)
+		{
+			return !string.IsNullOrWhiteSpace(user.FirstName)
+				&& !string.IsNullOrWhiteSpace(user.SecondaryName)
+				&& !string.IsNullOrWhiteSpace(user.Surname);
+		}
+
+		public static bool IsValid(this User user)
+		{
+			return !string.IsNullOrWhiteSpace(user.FirstName)
+				&& !string.IsNullOrWhiteSpace(user.SecondaryName)
+				&& !string.IsNullOrWhiteSpace(user.Surname);
+		}
+
+		public static User ToModel(this UserViewModel model)
+		{
+			return new User()
+			{
+				Id = model.Id,
+				FirstName = model.FirstName,
+				SecondaryName = model.SecondaryName,
+				Surname = model.Surname
+			};
+		}
 	}
 }

@@ -26,18 +26,21 @@ namespace Gandiva.Controllers
 			switch (action)
 			{
 				case "save":
+					if (_model.IsValid()) UserService.UpdateUser(_model.ToModel());
 					break;
 				case "delete":
+					if (_model.IsValid()) UserService.DeleteUser(_model.Id);
 					break;
 				case "create":
+					if (_model.IsValid()) UserService.CreateUser(_model.ToModel());
 					break;
 			}
 			return Index();
 		}
-		
+
 		public ActionResult UsersList(int page = 0, bool withNew = false)
 		{
-			var users = UserService.GetUsers().Select(e => e.ToViewModel());
+			var users = UserService.GetUsers().Select(e => e.ToViewModel()).OrderBy(e => e.FullName);
 			var displayedUsers = users.Skip(page * ITEMS_PER_PAGE).Take(ITEMS_PER_PAGE);
 			ViewBag.Pages = Math.Ceiling(users.Count() / (float)ITEMS_PER_PAGE);
 			ViewBag.ShowNewUserField = withNew;
