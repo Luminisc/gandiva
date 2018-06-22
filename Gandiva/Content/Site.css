@@ -61,16 +61,57 @@ select {
     width: 100%;
     border-width: 2px;
 }
-.tasks-table > tbody > tr > td {
-    padding: 0.25em;
+
+    .tasks-table > tbody > tr > td {
+        padding: 0.25em;
+    }
+
+    .tasks-table > thead > tr > th {
+        text-align: center;
+    }
+
+.task-title {
+    max-width: 100%;
 }
-.tasks-table > thead > tr > th {
-    text-align: center;
+.tasks-desc {
+    max-width: 100%;
+    margin: 10px 0;
+    resize: none;
+}
+.task-header {
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+.label-default-header {
+    color: #ffffff;
+    padding: 0.25em;
+    margin: -10px 0 0 10px;
 }
 
 .glyphicon.glyphicon-one-fine-full-dot:before {
     content: "\25cf";
 }
+
 ul.page-control > li > a {
     height: 40px;
+}
+
+legend {
+    display: block;
+    width: auto;
+    padding: 0 5px;
+    margin-bottom: 0;
+    font-size: inherit;
+    line-height: inherit;
+    border-bottom: none;
+}
+fieldset {
+    border: 1px solid lightgrey;
+    padding: 5px;
+    margin-bottom: 1em;
+}
+.vertical-align {
+    display: flex;
+    align-items: center;
 }

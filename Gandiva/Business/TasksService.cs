@@ -11,7 +11,6 @@ namespace Gandiva.Business
         public static IEnumerable<TaskListItem> GetTasksList()
         {
             /* Получаем текущие таски */
-
             var tasks = new TaskRepository().Get().Where(x => x.IsActual).ToList();
             return tasks.Select(task => new TaskListItem
 			{

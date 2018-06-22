@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Gandiva.Data;
+using Gandiva.Models;
 
 namespace Gandiva.Controllers
 {
@@ -11,7 +13,9 @@ namespace Gandiva.Controllers
         // GET: Tasks
         public ActionResult Index()
         {
-            return View();
+            var current = new TaskRepository().Get(3);
+            var model = new TasksViewModel(current);
+            return View(model);
         }
     }
 }

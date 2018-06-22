@@ -12,3 +12,41 @@
         @Html.ActionLink("Пользователи", "Index", "Home")
     </div>
 </div>
+
+<div class="container">
+    <div class="input-group task-header">
+        @if (Model.IsEdit)
+        {
+            <span class="input-group-addon">Задача № @Model.Task.Id</span>
+        }
+        @Html.TextBoxFor(x => x.Task.Title, new { @class = "task-title form-control", placeholder = "Заголовок задачи" })
+    </div>
+    <fieldset>
+        <legend>Описание задачи</legend>
+        <div class="row">
+            <div class="col-sm-4">
+                @Html.DropDownListFor(x => x.Creator, new SelectList(Model.Users, "Id", "SurName",Model.Task.TaskCreator))
+            </div>
+            <div class="col-sm-4"><select></select></div>
+            <div class="col-sm-4">Дата</div>
+        </div>
+        <textarea class="form-control tasks-desc" rows="5"></textarea>
+        <div class="row">
+            <div class="col-sm-6">&nbsp;</div>
+            <div class="col-sm-3"><button type="button" class="btn btn-default btn-block">Сохранить</button></div>
+            <div class="col-sm-3"><button type="button" class="btn btn-default btn-block">Удалить</button></div>
+        </div>
+
+
+    </fieldset>
+    <fieldset>
+        <legend>Новый комментарий</legend>
+        <div class="row vertical-align">
+            <div class="col-sm-9">
+                <textarea class="form-control tasks-desc" rows="3"></textarea>
+            </div>
+            <div class="col-sm-3"><button type="button" class="btn btn-default btn-block">Удалить</button></div>
+        </div>
+    </fieldset>
+
+</div>
