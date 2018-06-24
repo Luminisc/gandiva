@@ -5,7 +5,7 @@ using Gandiva.Data.Entity;
 
 namespace Gandiva.Data
 {
-    interface IRepository<TEntity> where TEntity : class
+    interface IRepository<TEntity> where TEntity :Entity.Entity
     {
         /* CRUD operation */
         void Create(TEntity item);
@@ -16,7 +16,7 @@ namespace Gandiva.Data
         void Delete(TEntity item);
     }
 
-    abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    abstract class Repository<TEntity> : IRepository<TEntity> where TEntity: Entity.Entity 
     {
         readonly DbContext context;
         readonly IDbSet<TEntity> dbSet;
@@ -45,7 +45,9 @@ namespace Gandiva.Data
 
         public void Delete(TEntity item)
         {
-            dbSet.Remove(item);
+            //dbSet.Remove(item);
+            item.IsActual = false;
+
             context.SaveChanges();
         }
     }

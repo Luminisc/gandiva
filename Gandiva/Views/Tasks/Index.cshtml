@@ -23,7 +23,7 @@
     </div>
     <fieldset>
         <legend>Описание задачи</legend>
-        <div class="row">
+        <div class="row vertical-align">
             <div class="col-sm-4">
                 @Html.DropDownListFor(x => x.Task.Creator, new SelectList(Model.Users, "Id", "SurName", Model.Task.Creator))
             </div>
