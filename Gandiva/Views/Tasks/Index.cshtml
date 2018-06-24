@@ -19,16 +19,16 @@
         {
             <span class="input-group-addon">Задача № @Model.Id.Value</span>
         }
-        @Html.TextBoxFor(x => x.Title, new { @class = "task-title form-control", placeholder = "Заголовок задачи" })
+        @Html.TextBoxFor(x => x.Title, new { @class = "task-title form-control", placeholder = "Заголовок задачи", required = "required" })
     </div>
     <fieldset>
         <legend>Описание задачи</legend>
         <div class="row">
             <div class="col-sm-4">
-                @Html.DropDownListFor(x => x.Creator, new SelectList(Model.Users, "Id", "FullName", Model.Creator))
+                @Html.DropDownListFor(x => x.Creator, new SelectList(Model.Users, "Id", "FullName", Model.Creator), new { required = "required" })
             </div>
             <div class="col-sm-4">
-                @Html.DropDownListFor(x => x.Contractor, new SelectList(Model.Users, "Id", "FullName", Model.Contractor), "")
+                @Html.DropDownListFor(x => x.Contractor, new SelectList(Model.Users, "Id", "FullName", Model.Contractor), "", new { required = "required" })
             </div>
             <div class="col-sm-4">
                 @if (Model.Id.HasValue)
@@ -37,12 +37,13 @@
                 }
             </div>
         </div>
-        @Html.TextAreaFor(x => x.Description, new { @class = "form-control tasks-desc", rows="5" })
+        @Html.TextAreaFor(x => x.Description, new { @class = "form-control tasks-desc", rows = "5" })
         <div class="row">
             <div class="col-sm-6">&nbsp;</div>
             <div class="col-sm-3"><button type="button" class="btn btn-default btn-block">Сохранить</button></div>
             <div class="col-sm-3"><button type="button" class="btn btn-default btn-block">Удалить</button></div>
         </div>
+        <div id="comments" />
     </fieldset>
     <fieldset>
         <legend>Новый комментарий</legend>

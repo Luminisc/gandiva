@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Gandiva.Models.CommentViewModel>
+@{int i = 0;}
+@foreach (var comment in Model)
+{
+    @{i++;}
+    <fieldset>
+        <legend>Комментарий @i</legend>
+        <div class="row vertical-align">
+            <div class="col-sm-1">
+                <input hidden name="creator" value="@comment.Creator"/>
+                <textarea class="form-control tasks-desc" rows="3">Author: </textarea>
+            </div>
+            <div class="col-sm-8">
+                <textarea class="form-control tasks-desc" rows="3">@comment.Description</textarea>
+            </div>
+            <div class="col-sm-3"><button type="button" class="btn btn-default btn-block">Удалить</button></div>
+        </div>
+    </fieldset>
+}

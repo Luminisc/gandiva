@@ -40,6 +40,16 @@ namespace Gandiva.Common
 				CreatedDate = item.CreatedDate.ToString()
 			};
 		}
+
+		public static CommentViewModel ToViewModel(this Comment item)
+		{
+			return new CommentViewModel
+			{
+				Id = item.Id,
+				Creator = item.Creator,
+				Description = item.Description
+			};
+		}
 		#endregion
 
 		public static string FullName(this Gandiva.Data.Entity.User user)
