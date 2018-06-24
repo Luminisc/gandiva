@@ -14,7 +14,7 @@ namespace Gandiva.Data.Entity
         /// <summary>
         /// </summary>
         /// [ForeignKey("Creator")]
-        public virtual User CommentCretor { get; set; }
+        public virtual User CommentCreator { get; set; }
         public override string ToString() { return string.Format("Comment: {0}", Description); }
 
         public sealed class Configuration : EntityTypeConfiguration<Comment>
@@ -26,11 +26,11 @@ namespace Gandiva.Data.Entity
 
                 /* Setting relations */
                 HasRequired(x => x.ParentTask)
-                    .WithMany()
+                    .WithMany(pc=>pc.Comments)
                     .HasForeignKey(x => x.Task)
                     .WillCascadeOnDelete(false);
 
-                HasRequired(x => x.CommentCretor)
+                HasRequired(x => x.CommentCreator)
                     .WithMany()
                     .HasForeignKey(x => x.Creator)
                     .WillCascadeOnDelete(false);

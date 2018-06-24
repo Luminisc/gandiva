@@ -15,29 +15,29 @@
 
 <div class="container">
     <div class="input-group task-header">
-        @if (Model.IsEdit)
+        @if (Model.Id.HasValue)
         {
-            <span class="input-group-addon">Задача № @Model.Task.Id</span>
+            <span class="input-group-addon">Задача № @Model.Id.Value</span>
         }
-        @Html.TextBoxFor(x => x.Task.Title, new { @class = "task-title form-control", placeholder = "Заголовок задачи" })
+        @Html.TextBoxFor(x => x.Title, new { @class = "task-title form-control", placeholder = "Заголовок задачи" })
     </div>
     <fieldset>
         <legend>Описание задачи</legend>
         <div class="row">
             <div class="col-sm-4">
-                @Html.DropDownListFor(x => x.Task.Creator, new SelectList(Model.Users, "Id", "SurName", Model.Task.Creator))
+                @Html.DropDownListFor(x => x.Creator, new SelectList(Model.Users, "Id", "SurName", Model.Creator))
             </div>
             <div class="col-sm-4">
-                @Html.DropDownListFor(x => x.Task.Contractor, new SelectList(Model.Users, "Id", "SurName", Model.Task.Contractor), "")
+                @Html.DropDownListFor(x => x.Contractor, new SelectList(Model.Users, "Id", "SurName", Model.Contractor), "")
             </div>
             <div class="col-sm-4">
-                @if (Model.IsEdit)
+                @if (Model.Id.HasValue)
                 {
-                    @Model.Task.CreatedDate
+                    @Model.CreatedDate
                 }
             </div>
         </div>
-        @Html.TextAreaFor(x => x.Task.Description, new { @class = "form-control tasks-desc", rows="5" })
+        @Html.TextAreaFor(x => x.Description, new { @class = "form-control tasks-desc", rows="5" })
         <div class="row">
             <div class="col-sm-6">&nbsp;</div>
             <div class="col-sm-3"><button type="button" class="btn btn-default btn-block">Сохранить</button></div>
