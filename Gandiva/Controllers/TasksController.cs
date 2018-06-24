@@ -13,11 +13,10 @@ namespace Gandiva.Controllers
     public class TasksController : Controller
     {
         // GET: Tasks
-        public ActionResult Index(int taskId = 0)
+        public ActionResult Index(int taskId = 1)
         {
-			taskId = 3;
 			var model = TasksService.GetTask(taskId).ToViewModel();
-			model.Users = UserService.GetUsers().Select(user => user.ToViewModel());
+			model.Users = UserService.GetUsers().Select(user => user.ToViewModel()).OrderBy(x => x.FullName);
             return View(model);
         }
     }

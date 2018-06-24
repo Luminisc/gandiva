@@ -25,10 +25,10 @@
         <legend>Описание задачи</legend>
         <div class="row">
             <div class="col-sm-4">
-                @Html.DropDownListFor(x => x.Creator, new SelectList(Model.Users, "Id", "SurName", Model.Creator))
+                @Html.DropDownListFor(x => x.Creator, new SelectList(Model.Users, "Id", "FullName", Model.Creator))
             </div>
             <div class="col-sm-4">
-                @Html.DropDownListFor(x => x.Contractor, new SelectList(Model.Users, "Id", "SurName", Model.Contractor), "")
+                @Html.DropDownListFor(x => x.Contractor, new SelectList(Model.Users, "Id", "FullName", Model.Contractor), "")
             </div>
             <div class="col-sm-4">
                 @if (Model.Id.HasValue)
