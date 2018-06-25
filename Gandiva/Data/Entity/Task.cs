@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.ModelConfiguration;
 
 namespace Gandiva.Data.Entity
@@ -19,8 +20,10 @@ namespace Gandiva.Data.Entity
         // [ForeignKey("Contractor")]
         public virtual User TaskContractor { get; set; }
         public override string ToString() { return string.Format("Task: {0}", Title); }
+		
+		public virtual List<Comment> Comments { get; set; }
 
-        public sealed class Configuration : EntityTypeConfiguration<Task>
+		public sealed class Configuration : EntityTypeConfiguration<Task>
         {
             public Configuration()
             {

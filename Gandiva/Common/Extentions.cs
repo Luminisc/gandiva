@@ -28,6 +28,28 @@ namespace Gandiva.Common
 				Surname = item.Surname
 			};
 		}
+		public static TasksViewModel ToViewModel(this Task item)
+		{
+			return new TasksViewModel
+			{
+				Id = item.Id,
+				Title = item.Title,
+				Description = item.Description,
+				Creator = item.Creator,
+				Contractor = item.Contractor,
+				CreatedDate = item.CreatedDate.ToString()
+			};
+		}
+
+		public static CommentViewModel ToViewModel(this Comment item)
+		{
+			return new CommentViewModel
+			{
+				Id = item.Id,
+				Creator = item.Creator,
+				Description = item.Description
+			};
+		}
 		#endregion
 
 		public static string FullName(this Gandiva.Data.Entity.User user)

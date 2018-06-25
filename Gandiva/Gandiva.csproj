@@ -121,6 +121,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Business\CommentService.cs" />
+    <Compile Include="Business\Entity\Comment.cs" />
+    <Compile Include="Business\Entity\Task.cs" />
     <Compile Include="Business\Entity\TaskListItem.cs" />
     <Compile Include="Business\Entity\User.cs" />
     <Compile Include="Business\TasksService.cs" />
