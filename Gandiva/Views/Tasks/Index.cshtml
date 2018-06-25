@@ -12,11 +12,12 @@
         @Html.ActionLink("Пользователи", "Index", "Home")
     </div>
 </div>
-
 <div class="container">
+    <form action="@Url.Action("SubmitTask", "Tasks", null, Request.Url.Scheme)" method="post" id="taskForm">
     <div class="input-group task-header">
         @if (Model.Id.HasValue)
         {
+                <input hidden name="Id" value="@Model.Id.Value" id="taskId"/>
             <span class="input-group-addon">Задача № @Model.Id.Value</span>
         }
         @Html.TextBoxFor(x => x.Title, new { @class = "task-title form-control", placeholder = "Заголовок задачи", required = "required" })
@@ -33,6 +34,7 @@
             <div class="col-sm-4">
                 @if (Model.Id.HasValue)
                 {
+                        <input hidden name="CreatedDate" value="@Model.CreatedDate" />
                     @Model.CreatedDate
                 }
             </div>
@@ -40,19 +42,21 @@
         @Html.TextAreaFor(x => x.Description, new { @class = "form-control tasks-desc", rows = "5" })
         <div class="row">
             <div class="col-sm-6">&nbsp;</div>
-            <div class="col-sm-3"><button type="button" class="btn btn-default btn-block">Сохранить</button></div>
-            <div class="col-sm-3"><button type="button" class="btn btn-default btn-block">Удалить</button></div>
+                <div class="col-sm-3"><button type="submit" onclick="window.app.submitTask()" class="btn btn-default btn-block">Сохранить</button></div>
+                <div class="col-sm-3"><button onclick="window.app.deleteTask()" class="btn btn-default btn-block">Удалить</button></div>
         </div>
-        <div id="comments" />
     </fieldset>
-    <fieldset>
-        <legend>Новый комментарий</legend>
-        <div class="row vertical-align">
-            <div class="col-sm-9">
-                <textarea class="form-control tasks-desc" rows="3"></textarea>
+    </form>
+    <div id="comments"></div>
             </div>
-            <div class="col-sm-3"><button type="button" class="btn btn-default btn-block">Сохранить</button></div>
-        </div>
-    </fieldset>
 
-</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var taskId = '@ViewBag.TaskId';
+
+        $("#comments").load('@ViewBag.TasksCommentsPartialViewLink', { taskId: taskId} );
+
+
+    });
+</script>

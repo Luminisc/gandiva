@@ -186,6 +186,7 @@
     <Content Include="Views\Tasks\Index.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Users\UsersList.cshtml" />
+    <Content Include="Views\Tasks\CommentsList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

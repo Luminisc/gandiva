@@ -13,7 +13,7 @@ namespace Gandiva.Models
 
     public class UsersViewModel
     {
-        public UserViewModel ActiveUser;
+        public int ActiveUser;
         public IEnumerable<UserViewModel> Users = new List<UserViewModel>();
     }
 }
