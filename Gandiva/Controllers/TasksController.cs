@@ -38,16 +38,20 @@ namespace Gandiva.Controllers
 			return View("Index");
 		}
 
-		public ActionResult CommentsList(IEnumerable<CommentViewModel> comments)
+		public ActionResult CommentsList(IEnumerable<CommentViewModel> comments, int? delete)
 		{
-
+			if (delete.HasValue)
+			{
+				comments = comments.Take(delete.Value).Concat(comments.Skip(delete.Value + 1).Take(comments.Count() - 1 - delete.Value));
+			}
+			ViewBag.Users = UserService.GetUsers().Select(user => user.ToViewModel()).ToDictionary(x => x.Id, x => x.FullName);
 			return View("CommentsList", comments);
 		}
 
 		public ActionResult TaskCommentsList(int taskId)
 		{
 			var model = CommentService.GetComments(taskId).Select(comment => comment.ToViewModel());
-			return CommentsList(model);
+			return CommentsList(model, null);
 		}
 	}
 }

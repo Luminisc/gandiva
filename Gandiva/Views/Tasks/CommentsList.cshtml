@@ -1,18 +1,24 @@
 ﻿@model IEnumerable<Gandiva.Models.CommentViewModel>
 @{ Layout = null; int i = 0;}
-@foreach (var comment in Model)
-{
-    <fieldset>
-        <legend>Комментарий @{++i;}</legend>
-        <div class="row vertical-align">
-            <div class="col-sm-2">
-                <input hidden name="creator" value="@comment.Creator"/>
-                <textarea class="form-control tasks-desc" rows="3">Author: </textarea>
+
+<form action="@Url.Action("CommentsList", "Tasks", null, Request.Url.Scheme)" method="post" id="commentsForm">
+    @foreach (var comment in Model)
+    {
+        int displayIndex = i + 1;
+        <fieldset>
+            <legend>Комментарий @displayIndex</legend>
+            <input hidden name="[@i].id" value="@comment.Id" />
+            <div class="row vertical-align">
+                <div class="col-sm-3">
+                    <input hidden name="[@i].creator" value="@comment.Creator" />
+                    <label class="form-control tasks-desc" rows="3">@ViewBag.Users[comment.Creator]</label>
+                </div>
+                <div class="col-sm-6">
+                    <textarea class="form-control tasks-desc" rows="3" name="[@i].Description">@comment.Description</textarea>
+                </div>
+                <div class="col-sm-3"><button type="button" class="btn btn-default btn-block" onclick="window.app.submitDelete(@i)">Удалить</button></div>
             </div>
-            <div class="col-sm-7">
-                <textarea class="form-control tasks-desc" rows="3">@comment.Description</textarea>
-            </div>
-            <div class="col-sm-3"><button type="button" class="btn btn-default btn-block">Удалить</button></div>
-        </div>
-    </fieldset>
-}
+        </fieldset>
+        i++;
+    }
+</form>

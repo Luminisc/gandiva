@@ -48,6 +48,23 @@
                 window.app.changePage({page});
             }
 
+            window.app.submitDelete = function (comment) {
+                var url = '@Url.Action("CommentsList", "Tasks", null, Request.Url.Scheme)';
+                var data = $("#commentsForm").serialize();
+                data += "&delete=" + comment;
+                
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: data,
+                    success: function (data) {
+                        $("#comments").html(data);
+                    }
+                });
+
+                return false; // to avoid default submit behavior
+            };
+
             window.app.refreshView();
         });
     </script>
