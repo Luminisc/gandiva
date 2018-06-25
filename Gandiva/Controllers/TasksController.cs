@@ -8,23 +8,24 @@ using Gandiva.Common;
 
 namespace Gandiva.Controllers
 {
-    public class TasksController : Controller
-    {
-        // GET: Tasks
-        public ActionResult Index(int? taskId = 1)
-        {
+	public class TasksController : Controller
+	{
+		// GET: Tasks
+		public ActionResult Index(int? taskId)
+		{
 			ViewBag.CommentsPartialViewLink = Url.Action("CommentsList", "Tasks", null, Request.Url.Scheme);
 			ViewBag.TasksCommentsPartialViewLink = Url.Action("TaskCommentsList", "Tasks", null, Request.Url.Scheme);
 			if (!taskId.HasValue) return NewTaskView();
 			var model = TasksService.GetTask(taskId.Value).ToViewModel();
 			model.Users = UserService.GetUsers().Select(user => user.ToViewModel()).OrderBy(x => x.FullName);
 			model.Comments = CommentService.GetComments(taskId.Value).Select(comment => comment.ToViewModel());
-            return View(model);
-        }
+			return View(model);
+		}
 
 		public ActionResult NewTaskView()
 		{
-			TasksViewModel model = new TasksViewModel() {
+			TasksViewModel model = new TasksViewModel()
+			{
 				CreatedDate = DateTime.Now.ToString()
 			};
 			model.Users = UserService.GetUsers().Select(user => user.ToViewModel()).OrderBy(x => x.FullName);
@@ -38,7 +39,13 @@ namespace Gandiva.Controllers
 			return View("Index");
 		}
 
-		public ActionResult CommentsList(CommentsViewModel model, int? delete)
+		public ActionResult RemoveTask(int taskId)
+		{
+			//remove
+			return RedirectToAction("Index", "Home");
+		}
+
+		public ActionResult CommentsList(CommentsViewModel model, CommentViewModel newComment, int? delete)
 		{
 			var comments = model.Comments;
 			if (delete.HasValue)
@@ -54,7 +61,7 @@ namespace Gandiva.Controllers
 		{
 			var comments = CommentService.GetComments(taskId).Select(comment => comment.ToViewModel());
 			var model = new CommentsViewModel { Comments = comments };
-			return CommentsList(model, null);
+			return CommentsList(model, null, null);
 		}
 	}
 }

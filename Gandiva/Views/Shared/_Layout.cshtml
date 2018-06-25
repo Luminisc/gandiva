@@ -49,11 +49,15 @@
             }
 
             window.app.submitTask = function () {
+                if (!document.getElementById("taskForm").checkValidity()) {
+                    return;
+                }
+
                 var url = '@Url.Action("SubmitForm", "Tasks", null, Request.Url.Scheme)';
                 var taskData = $("#taskForm").serialize();
                 var commentsData = $("#commentsForm").serialize();
                 var data = taskData + "&" + commentsData;
-                
+
                 $.ajax({
                     type: "POST",
                     url: url,
@@ -66,11 +70,33 @@
                 return false; // to avoid default submit behavior
             };
 
-            window.app.submitDelete = function (comment) {
+            window.app.deleteTask = function () {
+                if (!confirm("Хотите удалить данную задачу?")) {
+                    return;
+                }
+
+
+                var url = '@Url.Action("SubmitForm", "Tasks", null, Request.Url.Scheme)';
+                var taskId = $("#taskId").val();
+                var data = {taskId}
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: data,
+                    success: function (data) {
+                        
+                    }
+                });
+
+                return false; // to avoid default submit behavior
+            };
+
+            window.app.addComment = function (comment) {
                 var url = '@Url.Action("CommentsList", "Tasks", null, Request.Url.Scheme)';
                 var data = $("#commentsForm").serialize();
                 data += "&delete=" + comment;
-                
+
                 $.ajax({
                     type: "POST",
                     url: url,
@@ -81,6 +107,46 @@
                 });
 
                 return false; // to avoid default submit behavior
+            };
+
+            window.app.deleteComment = function (comment) {
+                var url = '@Url.Action("CommentsList", "Tasks", null, Request.Url.Scheme)';
+                var data = $("#commentsForm").serialize();
+                data += "&delete=" + comment;
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: data,
+                    success: function (data) {
+                        $("#comments").html(data);
+                    }
+                });
+
+                return false; // to avoid default submit behavior
+            };
+
+            window.app.setCookie = function setCookie(name, value, days) {
+                var expires = "";
+                if (days) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    expires = "; expires=" + date.toUTCString();
+                }
+                document.cookie = name + "=" + (value || "") + expires + "; path=/";
+            };
+            window.app.getCookie = function getCookie(name) {
+                var nameEQ = name + "=";
+                var ca = document.cookie.split(';');
+                for (var i = 0; i < ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+                }
+                return null;
+            };
+            window.app.setActiveUser = function (user) {
+                window.app.setCookie("activeUser", user, 7);
             };
 
             window.app.refreshView();

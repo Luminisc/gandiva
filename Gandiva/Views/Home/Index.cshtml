@@ -10,7 +10,7 @@
         @Html.ActionLink("Пользователи", "Index", "Users")
     </div>
     <div class="top-bar-element top-bar-element-right">
-        @Html.DropDownListFor(m => m.ActiveUser, new SelectList(Model.Users, "Id", "FullName"))
+        @Html.DropDownList("activeUser", new SelectList(Model.Users, "Id", "FullName", Model.ActiveUser.Id), new { onchange = "window.app.setActiveUser(this.options[this.selectedIndex].value)" })
     </div>
 </div>
 <div>

@@ -23,9 +23,18 @@
                 <div class="col-sm-6">
                     <textarea class="form-control tasks-desc" rows="3" name="Comments[@i].Description">@comment.Description</textarea>
                 </div>
-                <div class="col-sm-3"><button type="button" class="btn btn-default btn-block" onclick="window.app.submitDelete(@i)">Удалить</button></div>
+                <div class="col-sm-3"><button type="button" class="btn btn-default btn-block" onclick="window.app.deleteComment(@i)">Удалить</button></div>
             </div>
         </fieldset>
         i++;
     }
 </form>
+<fieldset>
+    <legend>Новый комментарий</legend>
+    <div class="row vertical-align">
+        <div class="col-sm-9">
+            <textarea class="form-control tasks-desc" rows="3" name="newComment.Description"></textarea>
+        </div>
+        <div class="col-sm-3"><button type="button" class="btn btn-default btn-block" >Сохранить</button></div>
+    </div>
+</fieldset>
