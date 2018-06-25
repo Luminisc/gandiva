@@ -17,7 +17,7 @@ namespace Gandiva.Models
 
 	public class CommentViewModel
 	{
-		public int Id { get; set; }
+		public int? Id { get; set; }
 
 		public int Creator { get; set; }
 

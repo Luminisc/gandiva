@@ -7,7 +7,14 @@
         int displayIndex = i + 1;
         <fieldset>
             <legend>Комментарий @displayIndex</legend>
-            <input hidden name="Comments[@i].id" value="@comment.Id" />
+            @if (comment.Id.HasValue)
+            {
+                <input hidden name="Comments[@i].id" value="@comment.Id.Value" />
+            }
+            else
+            {
+                <input hidden name="Comments[@i].id" value="" />
+            }
             <div class="row vertical-align">
                 <div class="col-sm-3">
                     <input hidden name="Comments[@i].creator" value="@comment.Creator" />

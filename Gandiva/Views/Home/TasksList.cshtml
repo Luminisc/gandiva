@@ -24,7 +24,7 @@
         @foreach (var task in Model.Tasks)
     {
         <tr>
-            <td>@task.Id</td>
+            <td>@Html.ActionLink(task.Id.ToString(), "Index", "Tasks", new { taskId = @task.Id }, Request.Url.Scheme)</td>
             <td>@task.Title</td>
             <td>@task.Creator</td>
             <td>@task.Contractor</td>
