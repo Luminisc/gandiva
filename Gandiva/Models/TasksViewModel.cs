@@ -23,4 +23,9 @@ namespace Gandiva.Models
 
 		public string Description { get; set; }
 	}
+
+	public class CommentsViewModel
+	{
+		public IEnumerable<CommentViewModel> Comments { get; set; }
+	}
 }

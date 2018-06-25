@@ -1,20 +1,20 @@
-﻿@model IEnumerable<Gandiva.Models.CommentViewModel>
+﻿@model Gandiva.Models.CommentsViewModel
 @{ Layout = null; int i = 0;}
 
-<form action="@Url.Action("CommentsList", "Tasks", null, Request.Url.Scheme)" method="post" id="commentsForm">
-    @foreach (var comment in Model)
+<form method="post" id="commentsForm">
+    @foreach (var comment in Model.Comments)
     {
         int displayIndex = i + 1;
         <fieldset>
             <legend>Комментарий @displayIndex</legend>
-            <input hidden name="[@i].id" value="@comment.Id" />
+            <input hidden name="Comments[@i].id" value="@comment.Id" />
             <div class="row vertical-align">
                 <div class="col-sm-3">
-                    <input hidden name="[@i].creator" value="@comment.Creator" />
+                    <input hidden name="Comments[@i].creator" value="@comment.Creator" />
                     <label class="form-control tasks-desc" rows="3">@ViewBag.Users[comment.Creator]</label>
                 </div>
                 <div class="col-sm-6">
-                    <textarea class="form-control tasks-desc" rows="3" name="[@i].Description">@comment.Description</textarea>
+                    <textarea class="form-control tasks-desc" rows="3" name="Comments[@i].Description">@comment.Description</textarea>
                 </div>
                 <div class="col-sm-3"><button type="button" class="btn btn-default btn-block" onclick="window.app.submitDelete(@i)">Удалить</button></div>
             </div>
