@@ -8,7 +8,7 @@ namespace Gandiva.Data
     interface IRepository<TEntity> where TEntity : class
     {
         /* CRUD operation */
-        void Create(TEntity item);
+        TEntity Create(TEntity item);
         IQueryable<TEntity> Get();
         TEntity Get(int id);
         IQueryable<TEntity> Get(Func<TEntity, bool> predicate);
@@ -27,10 +27,11 @@ namespace Gandiva.Data
             dbSet = context.Set<TEntity>();
         }
 
-        public void Create(TEntity item)
+        public TEntity Create(TEntity item)
         {
             dbSet.Add(item);
             context.SaveChanges();
+			return item;
         }
 
         public IQueryable<TEntity> Get() { return dbSet.AsNoTracking(); }

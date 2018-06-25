@@ -38,6 +38,76 @@ namespace Gandiva.Business
 			};
 		}
 
+		public static bool SaveTask(Task task, IEnumerable<Comment> comments)
+		{
+			bool successful = true;
 
+			try
+			{
+				var taskRepo = new TaskRepository();
+				var commentsRepo = new CommentRepository();
+
+				var taskForUpdate = taskRepo.Get(task.Id);
+				if (taskForUpdate == null)
+					return false;
+				taskForUpdate.Title = task.Title;
+				taskForUpdate.Description = task.Description;
+				taskForUpdate.Creator = task.Creator;
+				taskForUpdate.Contractor = task.Contractor;
+				taskRepo.Update(taskForUpdate);
+				var dbcomments = taskForUpdate.Comments;
+				foreach (var item in dbcomments)
+				{
+					commentsRepo.Delete(item);
+				}
+				foreach (var comment in comments)
+				{
+					commentsRepo.Create(new Data.Entity.Comment
+					{
+						Creator = comment.Creator,
+						Description = comment.Description,
+						Task = taskForUpdate.Id
+					});
+				}
+			}
+			catch (System.Exception ex)
+			{
+				successful = false;
+			}
+
+			return successful;
+		}
+
+		public static bool CreateTask(Task task, IEnumerable<Comment> comments)
+		{
+			bool successful = true;
+			try
+			{
+				var taskRepo = new TaskRepository();
+				var CreatedTask = taskRepo.Create(new Data.Entity.Task()
+				{
+					Title = task.Title,
+					Description = task.Description,
+					Creator = task.Creator,
+					Contractor = task.Contractor,
+					CreatedDate = System.DateTime.Now
+				});
+				var commentsRepo = new CommentRepository();
+				foreach (var comment in comments)
+				{
+					commentsRepo.Create(new Data.Entity.Comment
+					{
+						Creator = comment.Creator,
+						Description = comment.Description,
+						Task = CreatedTask.Id
+					});
+				}
+			}
+			catch (System.Exception ex)
+			{
+				successful = false;
+			}
+			return successful;
+		}
 	}
 }

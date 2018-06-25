@@ -19,6 +19,14 @@ namespace Gandiva.Controllers
 			var model = TasksService.GetTask(taskId.Value).ToViewModel();
 			model.Users = UserService.GetUsers().Select(user => user.ToViewModel()).OrderBy(x => x.FullName);
 			model.Comments = CommentService.GetComments(taskId.Value).Select(comment => comment.ToViewModel());
+
+			int activeUser = -1;
+			if (Request.Cookies["activeUser"] != null)
+				activeUser = model.Users.Where(x => x.Id == int.Parse(Request.Cookies["activeUser"].Value)).Single().Id;
+			else
+				activeUser = 1;
+			ViewBag.ActiveUser = activeUser;
+			ViewBag.TaskId = model.Id.HasValue ? model.Id.Value.ToString() : "";
 			return View(model);
 		}
 
@@ -29,37 +37,68 @@ namespace Gandiva.Controllers
 				CreatedDate = DateTime.Now.ToString()
 			};
 			model.Users = UserService.GetUsers().Select(user => user.ToViewModel()).OrderBy(x => x.FullName);
+			int activeUser = -1;
+			if (Request.Cookies["activeUser"] != null)
+				activeUser = model.Users.Where(x => x.Id == int.Parse(Request.Cookies["activeUser"].Value)).Single().Id;
+			model.Creator = activeUser;
 			return View("Index", model);
 		}
 
-		public ActionResult SubmitForm(TasksViewModel model)
+		public ActionResult SubmitTask(TasksViewModel model)
 		{
-			// if all good -> save and return to home
-			// else send to index with error for ex.
-			return View("Index");
+			bool result = true;
+			if (model.Comments == null)
+				model.Comments = new CommentViewModel[] { };
+			if (model.Id.HasValue)
+			{
+				result = TasksService.SaveTask(model.ToModel(), model.Comments.Select(x => x.ToModel()));
+			}
+			else
+			{
+				model.CreatedDate = System.DateTime.Now.ToString();
+				result = TasksService.CreateTask(model.ToModel(), model.Comments.Select(x => x.ToModel()));
+			}
+			if (result)
+				return RedirectToAction("Index", "Home");
+			else
+				return View("Index", model);
 		}
 
-		public ActionResult RemoveTask(int taskId)
+		public ActionResult DeleteTask(int taskId)
 		{
 			//remove
 			return RedirectToAction("Index", "Home");
 		}
 
-		public ActionResult CommentsList(CommentsViewModel model, CommentViewModel newComment, int? delete)
+		public ActionResult CommentsList(CommentsViewModel model, CommentViewModel newComment, string action)
 		{
-			var comments = model.Comments;
-			if (delete.HasValue)
+			if (action != null)
 			{
-				comments = comments.Take(delete.Value).Concat(comments.Skip(delete.Value + 1).Take(comments.Count() - 1 - delete.Value));
+				var comments = model.Comments;
+				if (action.ToLower().StartsWith("delete"))
+				{
+					int delete = int.Parse(action.Substring(7));
+					comments = comments.Take(delete).Concat(comments.Skip(delete + 1).Take(comments.Count() - 1 - delete));
+				}
+				if (action.ToLower().StartsWith("add"))
+				{
+					if (comments == null) comments = new CommentViewModel[] { };
+					comments = comments.Concat(new CommentViewModel[] { newComment });
+				}
+				model.Comments = comments;
 			}
-			model.Comments = comments;
+
 			ViewBag.Users = UserService.GetUsers().Select(user => user.ToViewModel()).ToDictionary(x => x.Id, x => x.FullName);
 			return View("CommentsList", model);
 		}
 
-		public ActionResult TaskCommentsList(int taskId)
+		public ActionResult TaskCommentsList(int? taskId)
 		{
-			var comments = CommentService.GetComments(taskId).Select(comment => comment.ToViewModel());
+			if (!taskId.HasValue)
+			{
+				return CommentsList(new CommentsViewModel() { Comments = new CommentViewModel[] { } }, null, null);
+			}
+			var comments = CommentService.GetComments(taskId.Value).Select(comment => comment.ToViewModel());
 			var model = new CommentsViewModel { Comments = comments };
 			return CommentsList(model, null, null);
 		}

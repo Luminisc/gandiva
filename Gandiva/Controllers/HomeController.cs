@@ -16,9 +16,9 @@ namespace Gandiva.Controllers
 		{
 			ViewBag.TablePartialViewLink = Url.Action("TasksList", "Home", null, Request.Url.Scheme);
 			var users = UserService.GetUsers().Select(e => e.ToViewModel()).OrderBy(e => e.FullName).ToList();
-			UserViewModel activeUser = null;
+			int activeUser = -1;
 			if (Request.Cookies["activeUser"] != null)
-				activeUser = users.Where(x => x.Id == int.Parse(Request.Cookies["activeUser"].Value)).Single();
+				activeUser = users.Where(x => x.Id == int.Parse(Request.Cookies["activeUser"].Value)).Single().Id;
 			return View(new UsersViewModel { Users = users, ActiveUser = activeUser });
 		}
 

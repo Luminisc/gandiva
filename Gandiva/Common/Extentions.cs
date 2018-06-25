@@ -3,8 +3,8 @@ using Gandiva.Models;
 
 namespace Gandiva.Common
 {
-    public static class Extentions
-    {
+	public static class Extentions
+	{
 		#region ToViewModel
 		public static TaskListItemViewModel ToViewModel(this TaskListItem item)
 		{
@@ -73,12 +73,35 @@ namespace Gandiva.Common
 
 		public static User ToModel(this UserViewModel model)
 		{
-			return new User()
+			return new User
 			{
 				Id = model.Id,
 				FirstName = model.FirstName,
 				SecondaryName = model.SecondaryName,
 				Surname = model.Surname
+			};
+		}
+
+		public static Task ToModel(this TasksViewModel model)
+		{
+			return new Task
+			{
+				Id = model.Id.HasValue ? model.Id.Value : -1,
+				Title = model.Title,
+				Description = model.Description,
+				Creator = model.Creator,
+				Contractor = model.Contractor,
+				CreatedDate = System.DateTime.Parse(model.CreatedDate)
+			};
+		}
+
+		public static Comment ToModel(this CommentViewModel model)
+		{
+			return new Comment
+			{
+				Id = model.Id.HasValue ? model.Id.Value : -1,
+				Creator = model.Creator,
+				Description = model.Description
 			};
 		}
 	}

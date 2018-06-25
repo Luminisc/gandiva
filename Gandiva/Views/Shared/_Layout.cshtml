@@ -53,7 +53,7 @@
                     return;
                 }
 
-                var url = '@Url.Action("SubmitForm", "Tasks", null, Request.Url.Scheme)';
+                var url = '@Url.Action("SubmitTask", "Tasks", null, Request.Url.Scheme)';
                 var taskData = $("#taskForm").serialize();
                 var commentsData = $("#commentsForm").serialize();
                 var data = taskData + "&" + commentsData;
@@ -75,27 +75,31 @@
                     return;
                 }
 
-
-                var url = '@Url.Action("SubmitForm", "Tasks", null, Request.Url.Scheme)';
+                var url = '@Url.Action("DeleteTask", "Tasks", null, Request.Url.Scheme)';
                 var taskId = $("#taskId").val();
-                var data = {taskId}
+                var data = { taskId }
 
                 $.ajax({
                     type: "POST",
                     url: url,
                     data: data,
                     success: function (data) {
-                        
+                        location.href = '@Url.Action("Index", "Home", null, Request.Url.Scheme)';
                     }
                 });
 
                 return false; // to avoid default submit behavior
             };
 
-            window.app.addComment = function (comment) {
+            window.app.addComment = function () {
+                if (!document.getElementById("newCommentForm").checkValidity()) {
+                    return;
+                }
+
                 var url = '@Url.Action("CommentsList", "Tasks", null, Request.Url.Scheme)';
                 var data = $("#commentsForm").serialize();
-                data += "&delete=" + comment;
+                var newComment = $("#newCommentForm").serialize();
+                data += "&" + newComment + "&newComment.Creator=" + window.app.getCookie('activeUser') + "&action=add";
 
                 $.ajax({
                     type: "POST",
@@ -112,7 +116,7 @@
             window.app.deleteComment = function (comment) {
                 var url = '@Url.Action("CommentsList", "Tasks", null, Request.Url.Scheme)';
                 var data = $("#commentsForm").serialize();
-                data += "&delete=" + comment;
+                data += "&action=delete_" + comment;
 
                 $.ajax({
                     type: "POST",
