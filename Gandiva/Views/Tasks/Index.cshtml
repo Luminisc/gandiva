@@ -43,8 +43,8 @@
             <div class="col-sm-3"><button type="button" class="btn btn-default btn-block">Сохранить</button></div>
             <div class="col-sm-3"><button type="button" class="btn btn-default btn-block">Удалить</button></div>
         </div>
-        <div id="comments" />
     </fieldset>
+    <div id="comments"></div>
     <fieldset>
         <legend>Новый комментарий</legend>
         <div class="row vertical-align">
@@ -56,3 +56,9 @@
     </fieldset>
 
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+            $("#comments").load('@ViewBag.TasksCommentsPartialViewLink', {taskId: @Model.Id} );
+        });
+</script>

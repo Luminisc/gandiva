@@ -13,6 +13,8 @@ namespace Gandiva.Controllers
         // GET: Tasks
         public ActionResult Index(int? taskId = 1)
         {
+			ViewBag.CommentsPartialViewLink = Url.Action("CommentsList", "Tasks", null, Request.Url.Scheme);
+			ViewBag.TasksCommentsPartialViewLink = Url.Action("TaskCommentsList", "Tasks", null, Request.Url.Scheme);
 			if (!taskId.HasValue) return NewTaskView();
 			var model = TasksService.GetTask(taskId.Value).ToViewModel();
 			model.Users = UserService.GetUsers().Select(user => user.ToViewModel()).OrderBy(x => x.FullName);
@@ -39,13 +41,13 @@ namespace Gandiva.Controllers
 		public ActionResult CommentsList(IEnumerable<CommentViewModel> comments)
 		{
 
-			return View(comments);
+			return View("CommentsList", comments);
 		}
 
-		public ActionResult CommentsList(int taskId)
+		public ActionResult TaskCommentsList(int taskId)
 		{
 			var model = CommentService.GetComments(taskId).Select(comment => comment.ToViewModel());
-			return View(model);
+			return CommentsList(model);
 		}
 	}
 }
