@@ -14,7 +14,8 @@ namespace Gandiva.Controllers
         {
             ViewBag.CommentsPartialViewLink = Url.Action("CommentsList", "Tasks", null, Request.Url.Scheme);
             ViewBag.TasksCommentsPartialViewLink = Url.Action("TaskCommentsList", "Tasks", null, Request.Url.Scheme);
-            if (!taskId.HasValue) return NewTaskView();
+            if (!taskId.HasValue)
+				return NewTaskView();
             var model = TasksService.GetTask(taskId.Value).ToViewModel();
             model.Users = UserService.GetUsers().Select(user => user.ToViewModel()).OrderBy(x => x.FullName);
             model.Comments = CommentService.GetComments(taskId.Value).Select(comment => comment.ToViewModel());
@@ -25,22 +26,45 @@ namespace Gandiva.Controllers
             else
                 activeUser = 1;
             ViewBag.ActiveUser = activeUser;
+
             ViewBag.TaskId = model.Id.HasValue ? model.Id.Value.ToString() : "";
-            return View(model);
+			ViewBag.Users = model.Users.ToDictionary(x => x.Id, x => x.FullName);
+			return View(model);
         }
 
-        public ActionResult NewTaskView()
+		protected ActionResult Index(TasksViewModel model)
+		{
+			ViewBag.CommentsPartialViewLink = Url.Action("CommentsList", "Tasks", null, Request.Url.Scheme);
+			ViewBag.TasksCommentsPartialViewLink = Url.Action("TaskCommentsList", "Tasks", null, Request.Url.Scheme);
+			model.Users = UserService.GetUsers().Select(user => user.ToViewModel()).OrderBy(x => x.FullName);
+
+			var activeUser = -1;
+			if (Request.Cookies["activeUser"] != null)
+				activeUser = model.Users.Single(x => x.Id == int.Parse(Request.Cookies["activeUser"].Value)).Id;
+			else
+				activeUser = 1;
+			ViewBag.ActiveUser = activeUser;
+
+			ViewBag.TaskId = model.Id.HasValue ? model.Id.Value.ToString() : "";
+			ViewBag.Users = model.Users.ToDictionary(x => x.Id, x => x.FullName);
+			return View(model);
+		}
+
+		public ActionResult NewTaskView()
         {
             TasksViewModel model = new TasksViewModel
             {
                 CreatedDate = DateTime.Now.ToString()
             };
             model.Users = UserService.GetUsers().Select(user => user.ToViewModel()).OrderBy(x => x.FullName);
-            var activeUser = -1;
+			ViewBag.Users = model.Users.ToDictionary(x => x.Id, x => x.FullName);
+
+			var activeUser = -1;
             if (Request.Cookies["activeUser"] != null)
                 activeUser = model.Users.Single(x => x.Id == int.Parse(Request.Cookies["activeUser"].Value)).Id;
             model.Creator = activeUser;
-            return View("Index", model);
+
+            return Index(model);
         }
 
         public ActionResult SubmitTask(TasksViewModel model)
@@ -63,7 +87,7 @@ namespace Gandiva.Controllers
 
         public ActionResult DeleteTask(int taskId)
         {
-            //remove
+			TasksService.DeleteTask(taskId);
             return RedirectToAction("Index", "Home");
         }
 
@@ -86,9 +110,8 @@ namespace Gandiva.Controllers
 
                 model.Comments = comments;
             }
-
-            ViewBag.Users = UserService.GetUsers().Select(user => user.ToViewModel()).ToDictionary(x => x.Id, x => x.FullName);
-            return View("CommentsList", model);
+			ViewBag.Users = UserService.GetUsers().Select(user => user.ToViewModel()).ToDictionary(x => x.Id, x => x.FullName);
+			return View("CommentsList", model);
         }
 
         public ActionResult TaskCommentsList(int? taskId)

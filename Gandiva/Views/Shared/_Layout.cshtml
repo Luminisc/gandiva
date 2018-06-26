@@ -62,8 +62,12 @@
                     type: "POST",
                     url: url,
                     data: data,
+                    dataType: 'html',
                     success: function (data) {
-                        $("document").html(data);
+                        $("html").html(data);
+                    },
+                    complete: function (data) {
+                        $("html").html(data);
                     }
                 });
 
@@ -83,6 +87,7 @@
                     type: "POST",
                     url: url,
                     data: data,
+                    dataType: 'html',
                     success: function (data) {
                         location.href = '@Url.Action("Index", "Home", null, Request.Url.Scheme)';
                     }

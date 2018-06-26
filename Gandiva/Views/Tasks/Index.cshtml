@@ -13,50 +13,51 @@
     </div>
 </div>
 <div class="container">
-    <form action="@Url.Action("SubmitTask", "Tasks", null, Request.Url.Scheme)" method="post" id="taskForm">
-    <div class="input-group task-header">
-        @if (Model.Id.HasValue)
-        {
-                <input hidden name="Id" value="@Model.Id.Value" id="taskId"/>
-            <span class="input-group-addon">Задача № @Model.Id.Value</span>
-        }
-        @Html.TextBoxFor(x => x.Title, new { @class = "task-title form-control", placeholder = "Заголовок задачи", required = "required" })
-    </div>
-    <fieldset>
-        <legend>Описание задачи</legend>
-        <div class="row vertical-align">
-            <div class="col-sm-4">
-                @Html.DropDownListFor(x => x.Creator, new SelectList(Model.Users, "Id", "FullName", Model.Creator), new { required = "required" })
-            </div>
-            <div class="col-sm-4">
-                @Html.DropDownListFor(x => x.Contractor, new SelectList(Model.Users, "Id", "FullName", Model.Contractor), "", new { required = "required" })
-            </div>
-            <div class="col-sm-4">
-                @if (Model.Id.HasValue)
-                {
-                        <input hidden name="CreatedDate" value="@Model.CreatedDate" />
-                    @Model.CreatedDate
-                }
-            </div>
+    <form method="post" id="taskForm">
+        <div class="input-group task-header">
+            @if (Model.Id.HasValue)
+            {
+                <input hidden name="Id" value="@Model.Id.Value" id="taskId" />
+                <span class="input-group-addon">Задача № @Model.Id.Value</span>
+            }
+            @Html.TextBoxFor(x => x.Title, new { @class = "task-title form-control", placeholder = "Заголовок задачи", required = "required" })
         </div>
-        @Html.TextAreaFor(x => x.Description, new { @class = "form-control tasks-desc", rows = "5" })
-        <div class="row">
-            <div class="col-sm-6">&nbsp;</div>
+        <fieldset>
+            <legend>Описание задачи</legend>
+            <div class="row vertical-align">
+                <div class="col-sm-4">
+                    @Html.DropDownListFor(x => x.Creator, new SelectList(Model.Users, "Id", "FullName", Model.Creator), new { required = "required" })
+                </div>
+                <div class="col-sm-4">
+                    @Html.DropDownListFor(x => x.Contractor, new SelectList(Model.Users, "Id", "FullName", Model.Contractor), "", new { required = "required" })
+                </div>
+                <div class="col-sm-4">
+                    @if (Model.Id.HasValue)
+                    {
+                        <input hidden name="CreatedDate" value="@Model.CreatedDate" />
+                        @Model.CreatedDate
+                    }
+                </div>
+            </div>
+            @Html.TextAreaFor(x => x.Description, new { @class = "form-control tasks-desc", rows = "5" })
+            <div class="row">
+                <div class="col-sm-6">&nbsp;</div>
                 <div class="col-sm-3"><button type="submit" onclick="window.app.submitTask()" class="btn btn-default btn-block">Сохранить</button></div>
                 <div class="col-sm-3"><button onclick="window.app.deleteTask()" class="btn btn-default btn-block">Удалить</button></div>
-        </div>
-    </fieldset>
-    </form>
-    <div id="comments"></div>
             </div>
+        </fieldset>
+    </form>
+    <div id="comments">
+        @{Html.RenderPartial("CommentsList", new Gandiva.Models.CommentsViewModel() { Comments = Model.Comments });}
+    </div>
+</div>
 
-<script type="text/javascript">
-
-    $(document).ready(function () {
-        var taskId = '@ViewBag.TaskId';
-
-        $("#comments").load('@ViewBag.TasksCommentsPartialViewLink', { taskId: taskId} );
-
-
-    });
-</script>
+@if (Model.Comments == null)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var taskId = '@ViewBag.TaskId';
+            $("#comments").load('@ViewBag.TasksCommentsPartialViewLink', { taskId: taskId} );
+        });
+    </script>
+}

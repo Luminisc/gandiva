@@ -109,5 +109,17 @@ namespace Gandiva.Business
 			}
 			return successful;
 		}
+
+		public static bool DeleteTask(int taskId)
+		{
+			var taskRepo = new TaskRepository();
+			var dbtask = taskRepo.Get(taskId);
+			if (dbtask != null)
+			{
+				taskRepo.Delete(dbtask);
+				return true;
+			}
+			return false;
+		}
 	}
 }
