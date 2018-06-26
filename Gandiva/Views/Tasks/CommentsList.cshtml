@@ -1,7 +1,7 @@
 ﻿@model Gandiva.Models.CommentsViewModel
 @{ Layout = null; int i = 0;}
 
-<form method="post" id="commentsForm">
+<div id="commentsForm">
     @if (Model.Comments != null)
     {
         foreach (var comment in Model.Comments)
@@ -31,8 +31,8 @@
             i++;
         }
     }
-</form>
-<form method="post" id="newCommentForm">
+</div>
+<div id="newCommentForm">
     <fieldset>
         <legend>Новый комментарий</legend>
         <div class="row vertical-align">
@@ -42,4 +42,4 @@
             <div class="col-sm-3"><button type="button" class="btn btn-default btn-block" onclick="window.app.addComment()">Сохранить</button></div>
         </div>
     </fieldset>
-</form>
+</div>
